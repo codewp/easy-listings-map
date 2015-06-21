@@ -16,3 +16,4 @@ ads: false
   {% include post-grid.html %}
 {% endfor %}
 </div><!-- /.tiles -->
+{% include popup.html %}
