@@ -171,7 +171,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 			),
 		);
 		// Adding locations to query.
-		if ( count( $this->attributes['location'] ) ) {
+		if ( ! empty( $this->attributes['location'] ) ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'location',
 				'field'    => 'slug',
