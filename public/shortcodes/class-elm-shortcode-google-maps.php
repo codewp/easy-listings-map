@@ -143,10 +143,13 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 				),
 			),
 		);
+
+		// Showing only current page listings.
 		if ( $this->attributes['page_properties'] ) {
-			//add_action( 'epl_property_loop_start', array( $this, 'current_page_properties' ), 5 );
-			//$this->current_page_properties_map();
+			add_action( 'epl_property_loop_start', array( $this, 'current_page_properties_map' ), 5 );
+			return '';
 		}
+
 		return $this->create_map();
 	}
 
@@ -222,6 +225,8 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 			);
 			return ob_get_clean();
 		}
+
+		return '';
 	}
 
 	/**
@@ -264,20 +269,21 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 	}
 
 	/**
-	 * Creating a map based on properties in the current page.
+	 * Creating a map based on listings in the current page.
+	 *
+	 * @since  1.1.3
+	 * @return void
 	 */
-	protected function current_page_properties_map() {
-		$queried_object = get_queried_object();
-		if ( $queried_object->have_posts() ) {
+	public function current_page_properties_map() {
+		if ( have_posts() ) {
 			$markers = array();
-			while ( $queried_object->have_posts() ) {
-				$queried_object->the_post();
+			while ( have_posts() ) {
+				the_post();
 				$this->set_property_marker( $markers );
 			}
-			wp_reset_postdata();
 
 			if ( count( $markers ) ) {
-				$this->draw_map( $markers );
+				echo $this->draw_map( $markers );
 			}
 		}
 	}
