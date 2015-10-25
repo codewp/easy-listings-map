@@ -454,8 +454,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 		$markers      = array();
 		$search_data  = wp_parse_args( $_REQUEST['data'] );
 		$search_query = new WP_Query();
-		epl_search( $search_query, $search_data );
-		$search_query->get_posts();
+		epl_search( $search_query, $search_data, true );
 		if ( $search_query->have_posts() ) {
 			ob_start();
 			while ( $search_query->have_posts() ) {
