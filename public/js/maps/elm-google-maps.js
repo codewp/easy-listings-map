@@ -1,4 +1,4 @@
-jQuery( function( $ ) {
+(function( $, window ) {
     var map = infoBubble = markerClusterer = null;
     var get_markers = true;    // Flag for checking should map get markers on bound changes or not
     var markers = [];          // Array of markers in the map.
@@ -7,7 +7,7 @@ jQuery( function( $ ) {
      * Initialize Google Maps for listings
      * @return void
      */
-    function initializeListingMap() {
+    window.initializeListingMap = function initializeListingMap() {
         // If map initialized already don't init again.
         if ( map ) {
             return;
@@ -61,25 +61,7 @@ jQuery( function( $ ) {
          * Auto zoom and fitBounds to showing all of markers as good as possible.
          */
         if ( '1' === elm_google_maps.auto_zoom && markers.length ) {
-            var bounds = new google.maps.LatLngBounds();
-            for ( i = 0, max = markers.length; i < max; i++ ) {
-                bounds.extend( markers[i].getPosition() );
-            }
-            //center the map to the geometric center of all markers
-            map.setCenter( bounds.getCenter() );
-            map.fitBounds( bounds );
-
-            // Don't get markers when auto zoom changes zoom level.
-            get_markers = false;
-            //remove one zoom level to ensure no marker is on the edge.
-            map.setZoom( map.getZoom() - 1 >= 0 ? map.getZoom() - 1 : map.getZoom() );
-            // set a minimum zoom
-            // if you got only 1 marker or all markers are on the same address map will be zoomed too much.
-            if ( map.getZoom() > 15 ) {
-                // Don't get markers when auto zoom changes zoom level.
-                get_markers = false;
-                map.setZoom( 15 );
-            }
+            mapAutoZoom();
         }
         // Auto zoom disabled.
         else if ( markers.length ) {
@@ -128,7 +110,7 @@ jQuery( function( $ ) {
      * @param  {} property object of properties that are in the same coordinates.
      * @return void
      */
-    function getInfoWindow( marker, property ) {
+    window.getInfoWindow = function getInfoWindow( marker, property ) {
         return function() {
             var infoBubblePosition = infoBubble.get( 'position' );
             // Generate content of infobubble if it isn't defined already or previous infoBubble marker is not same as current marker.
@@ -174,10 +156,10 @@ jQuery( function( $ ) {
     /**
      * Getting markers from server when bounds of map changes.
      *
-     * @since 1.0.0
+     * @since  1.0.0
      * @return void
      */
-    function getBoundMarkers() {
+    window.getBoundMarkers = function getBoundMarkers() {
         /**
          * Checking should this function get bound markers or not.
          * Don't get markers when auto zoom changes zoom level.
@@ -217,14 +199,7 @@ jQuery( function( $ ) {
         .done( function( response ) {
             response = jQuery.parseJSON( response );
             if ( 1 === response.success ) {
-                // Removing old markers.
-                removeMarkers();
-                if ( response.markers.length ) {
-                    // Creating markers.
-                    createMarkers( response.markers );
-                    // Adding map markers to clusters.
-                    addMarkersToCluster();
-                }
+                addListingsToMap( response.markers );
             } else if ( 0 === response.success ) {
                 console.log( response.message );
             }
@@ -234,10 +209,10 @@ jQuery( function( $ ) {
     /**
      * Removing markers from map.
      *
-     * @since 1.0.0
+     * @since  1.0.0
      * @return void
      */
-    function removeMarkers() {
+    window.removeMarkers = function removeMarkers() {
         if ( markerClusterer ) {
             markerClusterer.clearMarkers();
         }
@@ -248,11 +223,11 @@ jQuery( function( $ ) {
     /**
      * Creating markers for properties.
      *
-     * @since 1.0.0
+     * @since  1.0.0
      * @param  [] properties
      * @return void
      */
-    function createMarkers( properties ) {
+    window.createMarkers = function createMarkers( properties ) {
         if ( properties.length ) {
             var marker;
             for ( i = 0, max = properties.length; i < max; i++ ) {
@@ -271,7 +246,7 @@ jQuery( function( $ ) {
      *
      * @since 1.0.0
      */
-    function addMarkersToCluster() {
+    window.addMarkersToCluster = function addMarkersToCluster() {
         if ( markers.length ) {
             var gridSize = elm_google_maps.cluster_size == -1 ? null : parseInt( elm_google_maps.cluster_size, 10 );
             markerClusterer = new MarkerClusterer(map, markers, {
@@ -288,12 +263,58 @@ jQuery( function( $ ) {
     }
 
     /**
+     * Adding listings to the map.
+     *
+     * @since 1.2.0
+     * @param void listings
+     */
+    window.addListingsToMap = function addListingsToMap( listings ) {
+        // Removing old markers.
+        removeMarkers();
+        if ( listings.length ) {
+            // Creating markers.
+            createMarkers( listings );
+            // Adding map markers to clusters.
+            addMarkersToCluster();
+        }
+    }
+
+    /**
+     * Auto zoom feature of the map.
+     * Auto zoom to showing all of listings in the map if possible.
+     *
+     * @since  1.2.0
+     * @return void
+     */
+    window.mapAutoZoom = function() {
+        var bounds = new google.maps.LatLngBounds();
+        for ( i = 0, max = markers.length; i < max; i++ ) {
+            bounds.extend( markers[i].getPosition() );
+        }
+        //center the map to the geometric center of all markers
+        map.setCenter( bounds.getCenter() );
+        map.fitBounds( bounds );
+
+        // Don't get markers when auto zoom changes zoom level.
+        get_markers = false;
+        //remove one zoom level to ensure no marker is on the edge.
+        map.setZoom( map.getZoom() - 1 >= 0 ? map.getZoom() - 1 : map.getZoom() );
+        // set a minimum zoom
+        // if you got only 1 marker or all markers are on the same address map will be zoomed too much.
+        if ( map.getZoom() > 15 ) {
+            // Don't get markers when auto zoom changes zoom level.
+            get_markers = false;
+            map.setZoom( 15 );
+        }
+    }
+
+    /**
      * Generating an info bubble object type.
      *
      * @since 1.0.0
      * @return InfoBubble
      */
-    function generateInfoBubble() {
+    window.generateInfoBubble = function generateInfoBubble() {
         return new InfoBubble({
                     maxWidth: 300,
                     maxHeight: 300,
@@ -312,4 +333,4 @@ jQuery( function( $ ) {
         this.close_.style[ key ] = value;
     };
 
-});
+})( jQuery, window );
