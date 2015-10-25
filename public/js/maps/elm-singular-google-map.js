@@ -32,7 +32,11 @@ jQuery( function( $ ) {
             },
             zoomControl: true,
             zoomControlOptions: {
-              style: google.maps.ZoomControlStyle.DEFAULT
+              style: google.maps.ZoomControlStyle.DEFAULT,
+              position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            streetViewControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_TOP
             }
         };
         map = new google.maps.Map( document.getElementById( elm_singular_map.map_id ), map_options);
