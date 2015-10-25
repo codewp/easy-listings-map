@@ -256,6 +256,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 			$marker_icon = $this->elm_properties->get_property_marker( get_post_type(), $property_status );
 
 			$markers[] = array(
+				'listing_id'	  => get_the_ID(),
 				'latitude'        => $property_coordinates['latitude'],
 				'longitude'       => $property_coordinates['longitude'],
 				'image_url'       => $image_url,
@@ -309,6 +310,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 					continue;
 				}
 				$merged_marker = array(
+					'listing_id'  => array( $markers[ $i ]['listing_id'] ),
 					'latitude'    => $markers[ $i ]['latitude'],
 					'longitude'   => $markers[ $i ]['longitude'],
 					'marker_icon' => $markers[ $i ]['marker_icon'],
@@ -324,6 +326,8 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 					if ( $markers[ $i ]['latitude'] == $markers[ $j ]['latitude'] && $markers[ $i ]['longitude'] == $markers[ $j ]['longitude'] ) {
 						// Merging details of markers that are in same coordinates.
 						$merged_marker['info'][] = $markers[ $j ];
+						// Adding listing id to merged marker.
+						$merged_marker['listing_id'][] = $markers[ $j ]['listing_id'];
 						// Setting marker icon to multiple property icon.
 						$merged_marker['marker_icon'] = esc_url( $multiple_marker );
 						// Marker that is in position j are merged so don't use it again.
