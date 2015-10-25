@@ -28,6 +28,9 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 		// Registering actions for loading markers in the map in ajax request.
 		$plugin_public->get_loader()->add_action( 'wp_ajax_load_map_markers', $this, 'load_map_markers' );
 		$plugin_public->get_loader()->add_action( 'wp_ajax_nopriv_load_map_markers', $this, 'load_map_markers' );
+		// Registering ajax actions to respond listings search.
+		$plugin_public->get_loader()->add_action( 'wp_ajax_elm_search_listings', $this, 'search_listings' );
+		$plugin_public->get_loader()->add_action( 'wp_ajax_nopriv_elm_search_listings', $this, 'search_listings' );
 	}
 
 	/**
@@ -146,7 +149,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 
 		// Showing only current page listings.
 		if ( $this->attributes['page_properties'] ) {
-			add_action( 'epl_property_loop_start', array( $this, 'current_page_properties_map' ), 5 );
+			$this->current_page_properties_map();
 			return '';
 		}
 
@@ -275,17 +278,14 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 	 * @return void
 	 */
 	public function current_page_properties_map() {
+		$markers = array();
 		if ( have_posts() ) {
-			$markers = array();
 			while ( have_posts() ) {
 				the_post();
 				$this->set_property_marker( $markers );
 			}
-
-			if ( count( $markers ) ) {
-				echo $this->draw_map( $markers );
-			}
 		}
+		echo $this->draw_map( $markers );
 	}
 
 	/**
@@ -345,17 +345,16 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 		$protocol = is_ssl() ? 'https' : 'http';
 		// Use minified libraries if SCRIPT_DEBUG is turned off
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-		// Register the script first.
-		wp_enqueue_script( 'elm_google_maps', $this->plugin_public->get_js_folder() . 'maps/elm-google-maps' . $suffix . '.js',
-			array( 'jquery' ), $this->plugin_public->get_version(), true );
-		if ( count( $this->data ) ) {
-			wp_localize_script( 'elm_google_maps', 'elm_google_maps', $this->data );
-		}
 		wp_enqueue_script( 'google-map-v-3', $protocol . '://maps.googleapis.com/maps/api/js?v=3.exp' );
 		wp_enqueue_script( 'google-maps-clusters', $this->plugin_public->get_js_folder() . 'maps/markerclusterer' . $suffix . '.js',
 			array(), $this->plugin_public->get_version(), true );
 		wp_enqueue_script( 'google-maps-infobubble', $this->plugin_public->get_js_folder() . 'maps/infobubble' . $suffix . '.js',
 			array(), $this->plugin_public->get_version(), true );
+		wp_enqueue_script( 'elm_google_maps', $this->plugin_public->get_js_folder() . 'maps/elm-google-maps' . $suffix . '.js',
+			array( 'jquery', 'google-map-v-3', 'google-maps-clusters', 'google-maps-infobubble' ), $this->plugin_public->get_version(), true );
+		if ( count( $this->data ) ) {
+			wp_localize_script( 'elm_google_maps', 'elm_google_maps', $this->data );
+		}
 	}
 
 	/**
@@ -435,4 +434,41 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 
 		die( json_encode( array( 'success' => 1, 'markers' => $markers ) ) );
 	}
+
+	/**
+	 * Ajax loading listings search result of EPL.
+	 *
+	 * @since  1.2.0
+	 * @return void
+	 */
+	public function search_listings() {
+		// Checking nonce.
+		if ( ! wp_verify_nonce( $_REQUEST['nonce'], 'elm_search_listings' ) ) {
+			die( json_encode( array( 'success' => 0, 'message' => 'Security check!' ) ) );
+		}
+		$listings     = '';
+		$markers      = array();
+		$search_data  = wp_parse_args( $_REQUEST['data'] );
+		$search_query = new WP_Query();
+		epl_search( $search_query, $search_data );
+		$search_query->get_posts();
+		if ( $search_query->have_posts() ) {
+			ob_start();
+			while ( $search_query->have_posts() ) {
+				$search_query->the_post();
+				$this->set_property_marker( $markers );
+				do_action( 'epl_property_blog' );
+			}
+			$listings = ob_get_clean();
+			wp_reset_postdata();
+
+			// Merging markers that are in same coordinates.
+			if ( count( $markers ) ) {
+				$markers = $this->merge_markers( $markers );
+			}
+		}
+
+		die( json_encode( array( 'success' => 1, 'listings' => $listings, 'markers' => $markers ) ) );
+	}
+
 }
