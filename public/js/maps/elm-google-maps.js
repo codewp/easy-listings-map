@@ -1,5 +1,5 @@
 (function( $, window ) {
-    var map = infoBubble = markerClusterer = null;
+    var map = infoBubble = markerClusterer = animatedMarker = null;
     var get_markers = true;    // Flag for checking should map get markers on bound changes or not
     var markers = [];          // Array of markers in the map.
 
@@ -233,7 +233,8 @@
             for ( i = 0, max = properties.length; i < max; i++ ) {
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng( properties[i].latitude, properties[i].longitude ),
-                    icon: properties[i]['marker_icon']
+                    icon: properties[i]['marker_icon'],
+                    listing_id : properties[i]['listing_id']
                 });
                 markers.push( marker );
                 google.maps.event.addListener( marker, 'click', getInfoWindow( marker, properties[i] ) );
@@ -276,6 +277,42 @@
             createMarkers( listings );
             // Adding map markers to clusters.
             addMarkersToCluster();
+        }
+    }
+
+    /**
+     * Animating a listing marker in the map.
+     *
+     * @since  1.2.0
+     * @param  int                      listingId
+     * @param  google.maps.Animation    animationType
+     * @return void|null
+     */
+    window.animateListingMarker = function animateListingMarker( listingId, animationType ) {
+        // Using default animation type.
+        if ( ! animationType ) {
+            animationType = google.maps.Animation.BOUNCE;
+        }
+        for ( var i = 0, max = markers.length; i < max; i++ ) {
+            for ( var j = 0, maxListings = markers[ i ]['listing_id'].length; j < maxListings; j++ ) {
+                if ( listingId == markers[ i ]['listing_id'][j] ) {
+                    animatedMarker = markers[ i ];
+                    markers[ i ].setAnimation( animationType );
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * Stoping an animated marker in the map if exists any animated marker in the map.
+     *
+     * @since  1.2.0
+     * @return void
+     */
+    window.stopAnimatedMarker = function stopAnimatedMarker() {
+        if ( animatedMarker ) {
+            animatedMarker.setAnimation( null );
         }
     }
 
