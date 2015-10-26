@@ -46,6 +46,10 @@ jQuery( function( $ ) {
                 map: map
             });
         }
+
+        google.maps.event.addListener( map, 'tilesloaded', function() {
+          jQuery('#gmap-loading').remove();
+        });
     }
 
     if ( 'object' === typeof google && 'object' === typeof google.maps ) {
