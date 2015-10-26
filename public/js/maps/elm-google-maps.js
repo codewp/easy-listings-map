@@ -78,6 +78,10 @@
             google.maps.event.addListener( map, 'dragend', getBoundMarkers );
             google.maps.event.addListener( map, 'zoom_changed', getBoundMarkers );
         }
+
+        google.maps.event.addListener( map, 'tilesloaded', function() {
+          jQuery('#gmap-loading').remove();
+        });
     }
 
     if ( 'object' === typeof google && 'object' === typeof google.maps ) {
