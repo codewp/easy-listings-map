@@ -469,6 +469,9 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 			if ( count( $markers ) ) {
 				$markers = $this->merge_markers( $markers );
 			}
+		} else {
+			// Default listings not found message.
+			$listings = '<div class="bottom_sixty">' . apply_filters( 'epl_property_search_not_found_message' , __( 'Listing not found, expand your search criteria and try again.', 'epl' ) ) . '</div>';
 		}
 
 		die( json_encode( array( 'success' => 1, 'listings' => $listings, 'markers' => $markers ) ) );
