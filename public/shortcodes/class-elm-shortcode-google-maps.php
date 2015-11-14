@@ -275,7 +275,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 	/**
 	 * Creating a map based on listings in the current page.
 	 *
-	 * @since  1.1.3
+	 * @since  1.2.0
 	 * @return void
 	 */
 	public function current_page_properties_map() {
@@ -283,7 +283,9 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 		if ( have_posts() ) {
 			while ( have_posts() ) {
 				the_post();
-				$this->set_property_marker( $markers );
+				if ( is_epl_post() ) {
+					$this->set_property_marker( $markers );
+				}
 			}
 		}
 		echo $this->draw_map( $markers );
