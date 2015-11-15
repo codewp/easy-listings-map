@@ -39,22 +39,14 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 	);
 
 	/**
-	 * Object of ELM_Properties class.
-	 *
-	 * @since 1.2.0
-	 * @var   ELM_Properties
-	 */
-	private $elm_properties;
-
-	/**
 	 * Constructor.
 	 *
 	 * @since 1.2.0
 	 * @param array               $data
 	 * @param ELM_Properties|null $elm_properties
 	 */
-	public function __construct( array $data = array(), ELM_Properties $elm_properties = null ) {
-		$this->elm_properties = null === $elm_properties ? ELM_IOC::make( 'properties' ) : $elm_properties;
+	public function __construct( array $data = array(), ELM_Public_Google_Map_Marker $google_map_marker = null ) {
+		$this->google_map_marker = null === $google_map_marker ? new ELM_Public_Google_Map_Marker() : $google_map_marker;
 		if ( count( $data ) ) {
 			foreach ( $data as $key => $value ) {
 				if ( array_key_exists( $key, $this->data ) ) {
@@ -86,7 +78,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 				while ( $this->data['listings']->have_posts() ) {
 					$this->data['listings']->the_post();
 					// Adding property marker with it's information to markers array.
-					$this->set_property_marker( $markers );
+					$this->google_map_marker->set_property_marker( $markers );
 				}
 				wp_reset_postdata();
 			}
@@ -103,7 +95,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 	 */
 	public function draw_map( array $markers ) {
 		// Merging markers that are in same coordinates.
-		$markers               = $this->merge_markers( $markers );
+		$markers               = $this->google_map_marker->merge_markers( $markers );
 		// Adding markers to properties of the class.
 		$this->data['markers'] = json_encode( $markers );
 		$data                  = array(
@@ -135,103 +127,6 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 	}
 
 	/**
-	 * Merging markers if they are in same coordinates.
-	 *
-	 * @since   1.2.0
-	 * @param   array $markers
-	 * @return  array
-	 */
-	public function merge_markers( array $markers ) {
-		$merged_markers = array();
-		if ( count( $markers ) ) {
-			// Getting multiple marker icon.
-			$elm_settings = ELM_IOC::make( 'settings' )->get_settings();
-			$multiple_marker = ! empty( $elm_settings['map_multiple_marker'] ) ? trim( $elm_settings['map_multiple_marker'] ) :
-				ELM_IOC::make( 'asset_manager' )->get_admin_images() . 'markers/multiple.png';
-
-			for ( $i = 0; $i < count( $markers ); $i++ ) {
-				// Did merged current marker already so don't use it again.
-				if ( isset( $markers[ $i ]['merged'] ) ) {
-					continue;
-				}
-				$merged_marker = array(
-					'listing_id'  => array( $markers[ $i ]['listing_id'] ),
-					'latitude'    => $markers[ $i ]['latitude'],
-					'longitude'   => $markers[ $i ]['longitude'],
-					'marker_icon' => $markers[ $i ]['marker_icon'],
-					'info'        => array(
-						$markers[ $i ],
-					),
-				);
-
-				for ( $j = 0; $j < count( $markers ); $j++ ) {
-					if ( $i == $j ) {
-						continue;
-					}
-					if ( $markers[ $i ]['latitude'] == $markers[ $j ]['latitude'] && $markers[ $i ]['longitude'] == $markers[ $j ]['longitude'] ) {
-						// Merging details of markers that are in same coordinates.
-						$merged_marker['info'][] = $markers[ $j ];
-						// Adding listing id to merged marker.
-						$merged_marker['listing_id'][] = $markers[ $j ]['listing_id'];
-						// Setting marker icon to multiple property icon.
-						$merged_marker['marker_icon'] = esc_url( $multiple_marker );
-						// Marker that is in position j are merged so don't use it again.
-						$markers[ $j ]['merged'] = true;
-					}
-				}
-				$merged_markers[] = $merged_marker;
-			}
-		}
-		return $merged_markers;
-	}
-
-	/**
-	 * Adding property coordinates ( latitude and longitude ) and other information about property to markers.
-	 *
-	 * @since   1.2.0
-	 * @param   array $markers
-	 */
-	public function set_property_marker( array & $markers, $listing = null ) {
-		$listing_id = absint( $listing );
-		if ( null === $listing ) {
-			$listing_id = get_the_ID();
-		} else if ( $listing instanceof WP_Post ) {
-			$listing_id = $listing->ID;
-		}
-		$property_coordinates = $this->elm_properties->get_property_coordinates( $listing_id );
-		if ( count( $property_coordinates ) ) {
-			// Getting extra info about property, like it's image and etc.
-			$image_url = '<img src="' . $this->get_images_url() .
-				'map/default-infowindow-image.png" style="width: 300px; height: 200px;" class="elm-infobubble-image" alt="' . trim( get_the_title() ) . '" />';
-			if ( has_post_thumbnail() ) {
-				$image_url = get_the_post_thumbnail( get_the_ID(), 'epl-image-medium-crop', array( 'class' => 'elm-infobubble-image' ) );
-			}
-
-			/**
-			 * Setting property marker icon.
-			 * Using marker that set in settings or use default marker for it.
-			 */
-			$property_status = get_post_meta( get_the_ID(), 'property_status', true );
-			$marker_icon     = $this->elm_properties->get_property_marker( get_post_type(), $property_status );
-
-			$markers[] = array(
-				'listing_id'	  => get_the_ID(),
-				'latitude'        => $property_coordinates['latitude'],
-				'longitude'       => $property_coordinates['longitude'],
-				'image_url'       => $image_url,
-				'url'             => esc_url( get_permalink() ),
-				'title'           => wp_trim_words( get_the_title(), 6 ),
-				'tab_title'		  => wp_trim_words( get_the_title(), 2 ),
-				'icons'           => $this->elm_properties->get_property_icons(),
-				// 'price'           => epl_get_property_price(),
-				'marker_icon'     => esc_url( $marker_icon ),
-				'property_status' => $property_status,
-				'property_type'   => get_post_type(),
-			);
-		}
-	}
-
-	/**
 	 * Registering scripts ans styles of Google Maps.
 	 *
 	 * @since  1.2.0
@@ -254,14 +149,14 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 			array( 'jquery', 'google-map-v-3', 'google-maps-clusters', 'google-maps-infobubble' ), false, true );
 		$elm_google_maps = array(
 			'nonce'             => wp_create_nonce( 'elm_bound_markers' ),
-			'markers'			=> $this->data['markers'],
+			'markers'           => $this->data['markers'],
 			'default_latitude'  => $this->data['default_latitude'],
 			'default_longitude' => $this->data['default_longitude'],
 			'auto_zoom'         => $this->data['auto_zoom'],
 			'map_id'            => $this->data['map_id'],
 			'map_types'         => $this->data['map_types'],
 			'zoom'              => (int) $this->data['zoom'],
-			'zoom_events'		=> absint( $this->data['zoom_events'] ),
+			'zoom_events'       => absint( $this->data['zoom_events'] ),
 			'cluster_size'      => (int) $this->data['cluster_size'],
 			'info_window_close' => $images_url . 'map/info-window-close-button.png',
 			'cluster_style'     => array(
