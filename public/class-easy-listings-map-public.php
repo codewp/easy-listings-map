@@ -83,6 +83,10 @@ class Easy_Listings_Map_Public {
 		 */
 		require_once $this->get_path() . 'class-easy-listings-map-public-controller.php';
 		/**
+		 * The controller class for rendering Google Maps by listings send to it.
+		 */
+		require_once $this->get_path() . 'class-elm-public-google-map-render.php';
+		/**
 		 * The class responsible for displaying map in single listings page.
 		 */
 		require_once $this->get_path() . 'class-easy-listings-map-public-single-map.php';
