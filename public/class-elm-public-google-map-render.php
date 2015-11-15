@@ -65,6 +65,12 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 		if ( ! strlen( trim( $this->data['map_id'] ) ) ) {
 			$this->data['map_id'] = 'elm_google_maps_' . current_time( 'timestamp' );
 		}
+		// Changing map_types to array
+		if ( is_string( $this->data['map_types'] ) && strlen( trim( $this->data['map_types'] ) ) ) {
+			$this->data['map_types'] = array_map( 'trim', explode( ',', $this->data['map_types'] ) );
+		} else if ( ! is_array( $this->data['map_types'] ) ) {
+			$this->data['map_types'] = array( 'ROADMAP' );
+		}
 	}
 
 	/**
