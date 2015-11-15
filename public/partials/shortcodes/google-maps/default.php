@@ -1,4 +1,7 @@
 <?php
+/**
+ * Deprecated use google-map-render/default.php instead of it.
+ */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
