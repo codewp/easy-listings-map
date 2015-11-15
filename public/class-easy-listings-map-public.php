@@ -83,6 +83,10 @@ class Easy_Listings_Map_Public {
 		 */
 		require_once $this->get_path() . 'class-easy-listings-map-public-controller.php';
 		/**
+		 * The controller class responsible for marker functionalities.
+		 */
+		require_once $this->get_path() . 'class-elm-public-google-map-marker.php';
+		/**
 		 * The controller class for rendering Google Maps by listings send to it.
 		 */
 		require_once $this->get_path() . 'class-elm-public-google-map-render.php';
