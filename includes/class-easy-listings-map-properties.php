@@ -304,4 +304,17 @@ class ELM_Properties {
 			$this->get_property_pool();
 	}
 
+	/**
+	 * Checking is a post type Easy Property Listings type.
+	 *
+	 * @since  1.2.0
+	 * @param  string  $post_type
+	 * @return boolean
+	 */
+	public function is_epl_post_type( $post_type ) {
+		$epl_posts  = epl_get_active_post_types();
+		$epl_posts	= apply_filters( 'epl_additional_post_types', array_keys( $epl_posts ) );
+		return in_array( $post_type, $epl_posts );
+	}
+
 }
