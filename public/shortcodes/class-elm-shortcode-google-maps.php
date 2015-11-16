@@ -16,14 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 
 	/**
-	 * Properties of the class.
-	 *
-	 * @since 1.0.0
-	 * @var   array
-	 */
-	private $data       = array();
-
-	/**
 	 * Attributes of the shortcode combined with default values.
 	 *
 	 * @since 1.0.0
