@@ -22,7 +22,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 	 * @var   array
 	 */
 	private $data = array(
-		'listings'          => null,
+		'listings'          => null,				// An instance of WP_Query class.
 		'map_id'            => '',
 		'output_map_div'    => true,
 		'content'           => '',
@@ -121,6 +121,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 			'default_longitude' => $this->data['default_longitude'],
 			'auto_zoom'         => $this->data['auto_zoom'],
 			'markers'           => $this->markers,
+			'query_vars'        => $this->data['listings'] instanceof WP_Query ? $this->data['listings']->query_vars : '',
 		);
 		/*
 		 * if $output_map_div == 0 don't output map div. In other words developer wants
@@ -156,6 +157,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 			array( 'jquery', 'google-map-v-3', 'google-maps-clusters', 'google-maps-infobubble' ), false, true );
 		$elm_google_maps = array(
 			'nonce'             => wp_create_nonce( 'elm_bound_markers' ),
+			'query_vars'        => $this->data['listings'] instanceof WP_Query ? $this->data['listings']->query_vars : '',
 			'markers'           => $this->markers,
 			'default_latitude'  => $this->data['default_latitude'],
 			'default_longitude' => $this->data['default_longitude'],
