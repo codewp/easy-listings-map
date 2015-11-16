@@ -81,7 +81,22 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 	public function create_map() {
 		$markers = array();
 		if ( $this->data['listings'] instanceof WP_Query ) {
-			if ( $this->data['listings']->have_posts() ) {
+			// Checking post types of query against epl post types.
+			$elm_properties = ELM_IOC::make( 'properties' );
+			$query_post_type = $this->data['listings']->get( 'post_type' );
+			$is_epl_post_type = true;
+			if ( is_array( $query_post_type ) ) {
+				foreach ( $query_post_type as $post_type ) {
+					if ( ! $elm_properties->is_epl_post_type( $post_type ) ) {
+						$is_epl_post_type = false;
+						break;
+					}
+				}
+			} else if ( ! $elm_properties->is_epl_post_type( $post_type ) ) {
+				$is_epl_post_type = false;
+			}
+
+			if ( $is_epl_post_type && $this->data['listings']->have_posts() ) {
 				while ( $this->data['listings']->have_posts() ) {
 					$this->data['listings']->the_post();
 					// Adding property marker with it's information to markers array.
