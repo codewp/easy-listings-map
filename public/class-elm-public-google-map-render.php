@@ -23,7 +23,6 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 	 */
 	private $data = array(
 		'listings'          => null,
-		'markers'           => '',
 		'map_id'            => '',
 		'output_map_div'    => true,
 		'content'           => '',
@@ -37,6 +36,14 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 		'auto_zoom'         => 1,
 		'clustering'        => true,
 	);
+
+	/**
+	 * Markers of listings that generated inside of the class.
+	 *
+	 * @since 1.2.0
+	 * @var   string
+	 */
+	private $markers = '';
 
 	/**
 	 * Constructor.
@@ -95,10 +102,10 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 	 */
 	public function draw_map( array $markers ) {
 		// Merging markers that are in same coordinates.
-		$markers               = $this->google_map_marker->merge_markers( $markers );
-		// Adding markers to properties of the class.
-		$this->data['markers'] = json_encode( $markers );
-		$data                  = array(
+		$markers       = $this->google_map_marker->merge_markers( $markers );
+		// Adding markers to markers property of the class.
+		$this->markers = json_encode( $markers );
+		$data          = array(
 			'controller'        => $this,
 			'content'           => trim( $this->data['content'] ),
 			'map_id'            => $this->data['map_id'],
@@ -113,7 +120,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 			'default_latitude'  => $this->data['default_latitude'],
 			'default_longitude' => $this->data['default_longitude'],
 			'auto_zoom'         => $this->data['auto_zoom'],
-			'markers'           => $this->data['markers'],
+			'markers'           => $this->markers,
 		);
 		/*
 		 * if $output_map_div == 0 don't output map div. In other words developer wants
@@ -149,7 +156,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 			array( 'jquery', 'google-map-v-3', 'google-maps-clusters', 'google-maps-infobubble' ), false, true );
 		$elm_google_maps = array(
 			'nonce'             => wp_create_nonce( 'elm_bound_markers' ),
-			'markers'           => $this->data['markers'],
+			'markers'           => $this->markers,
 			'default_latitude'  => $this->data['default_latitude'],
 			'default_longitude' => $this->data['default_longitude'],
 			'auto_zoom'         => $this->data['auto_zoom'],
