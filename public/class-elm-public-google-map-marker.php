@@ -40,11 +40,12 @@ class ELM_Public_Google_Map_Marker extends ELM_Public_Controller {
 	 * @param   array $markers
 	 */
 	public function set_property_marker( array & $markers, $listing = null ) {
-		$listing_id = absint( $listing );
 		if ( null === $listing ) {
 			$listing_id = get_the_ID();
 		} else if ( $listing instanceof WP_Post ) {
 			$listing_id = $listing->ID;
+		} else {
+			$listing_id = absint( $listing );
 		}
 		$property_coordinates = $this->elm_properties->get_property_coordinates( $listing_id );
 		if ( count( $property_coordinates ) ) {
