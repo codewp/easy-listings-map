@@ -74,7 +74,7 @@
         }
 
         // Load bound markers if all of listings doesn't loads already.
-        if ( '-1' !== elm_google_maps.limit ) {
+        if ( typeof elm_google_maps.zoom_events != 'undefined' && 0 != elm_google_maps.zoom_events ) {
             google.maps.event.addListener( map, 'dragend', getBoundMarkers );
             google.maps.event.addListener( map, 'zoom_changed', getBoundMarkers );
         }
@@ -192,16 +192,14 @@
             type: 'POST',
             url : elmPublicAjaxUrl,
             data : {
-                'action'       : 'load_map_markers',
-                'nonce'        : elm_google_maps.nonce,
-                'southWestLat' : swLat,
-                'southWestLng' : swLng,
-                'northEastLat' : neLat,
-                'northEastLng' : neLng,
-                'post_type'    : elm_google_maps.post_type,
-                'status'       : elm_google_maps.status,
-                'order'        : elm_google_maps.order,
-                'cluster_size' : elm_google_maps.cluster_size
+              'action'       : 'load_map_markers',
+              'nonce'        : elm_google_maps.nonce,
+              'southWestLat' : swLat,
+              'southWestLng' : swLng,
+              'northEastLat' : neLat,
+              'northEastLng' : neLng,
+              'query_vars'   : elm_google_maps.query_vars,
+              'cluster_size' : elm_google_maps.cluster_size
             }
         })
         .done( function( response ) {
