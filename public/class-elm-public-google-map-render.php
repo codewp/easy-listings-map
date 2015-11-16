@@ -92,7 +92,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 						break;
 					}
 				}
-			} else if ( ! $elm_properties->is_epl_post_type( $post_type ) ) {
+			} else if ( ! $elm_properties->is_epl_post_type( $query_post_type ) ) {
 				$is_epl_post_type = false;
 			}
 
