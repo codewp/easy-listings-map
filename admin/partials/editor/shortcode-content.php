@@ -107,6 +107,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 			<div class="shortcode-row form-group">
+				<label class="col-sm-4 control-label"><?php _e( 'Map default display type', 'elm' ) ?></label>
+				<div class="controls col-sm-8" data-tip="<?php _e( 'Default display type of the map', 'elm' ) ?>">
+					<?php
+					$map_type_options = apply_filters( 'elm_google_map_default_map_type_options',
+						array(
+							'ROADMAP'   => __( 'ROADMAP', 'elm' ),
+							'SATELLITE' => __( 'SATELLITE', 'elm' ),
+							'HYBRID'    => __( 'HYBRID', 'elm' ),
+							'TERRAIN'   => __( 'TERRAIN', 'elm' ),
+						)
+					);
+					if ( count( $map_type_options ) ) {
+						echo '<select class="form-control" name="default_map_type" id="default_map_type">';
+						foreach ( $map_type_options as $value => $name ) {
+							echo '<option value="' . esc_attr( $value ) . '">' . $name . '</option>';
+						}
+						echo '</select>';
+					}
+					?>
+				</div>
+			</div>
+			<div class="shortcode-row form-group">
 				<label class="col-sm-4 control-label" for="map_height"><?php _e( 'Map height', 'elm' ) ?></label>
 				<div class="controls col-sm-8" data-tip="<?php _e( 'Map html element height', 'elm' ) ?>">
 					<input class="form-control" type="text" value="500" name="map_height" id="map_height"/>
