@@ -81,7 +81,7 @@ class ELM_Public_Single_Map extends ELM_Public_Controller {
 	 *
 	 * @since 1.0.0
 	 */
-	protected function register_scripts() {
+	public function register_scripts() {
 		$protocol = is_ssl() ? 'https' : 'http';
 		// Use minified libraries if SCRIPT_DEBUG is turned off
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
@@ -99,11 +99,10 @@ class ELM_Public_Single_Map extends ELM_Public_Controller {
 	 * @since 1.0.0
 	 */
 	protected function draw_map() {
-		$this->register_scripts();
-
 		$this->render_view( 'maps.singular-map-content', array(
-			'map_height'   => $this->settings['map_height'],
-			'map_id'       => $this->data['map_id'],
+			'controller' => $this,
+			'map_height' => $this->settings['map_height'],
+			'map_id'     => $this->data['map_id'],
 		) );
 	}
 
