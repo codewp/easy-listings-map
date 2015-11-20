@@ -232,10 +232,10 @@ class ELM_Admin_Settings_Menu extends ELM_Admin_Controller {
 						'std'  => 'ROADMAP',
 						'options' => apply_filters( 'single_page_map_default_type_options',
 							array(
-								'ROADMAP'   => __( 'ROADMAP', 'elm' ),
-								'SATELLITE' => __( 'SATELLITE', 'elm' ),
-								'HYBRID'    => __( 'HYBRID', 'elm' ),
-								'TERRAIN'   => __( 'TERRAIN', 'elm' ),
+								'ROADMAP'   => __( 'Roadmap', 'elm' ),
+								'SATELLITE' => __( 'Sattelite', 'elm' ),
+								'HYBRID'    => __( 'Hybrid', 'elm' ),
+								'TERRAIN'   => __( 'Terrain', 'elm' ),
 							)
 						),
 					),
