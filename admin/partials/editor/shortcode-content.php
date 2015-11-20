@@ -170,6 +170,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 			<div class="shortcode-row form-group">
+				<label class="col-sm-4 control-label" for="zoom_events"><?php _e( 'Zoom change events', 'elm' ) ?></label>
+				<div class="controls col-sm-8" data-tip="<?php _e( 'If enabled when map zoom changes it will loads only markers that are in bound of the map. It recomended to leave it to disable when you set Number of listings in the map to -1, or when possible.', 'elm' ) ?>">
+					<select class="form-control" id="zoom_events" name="zoom_events">
+						<option value="1"><?php _e( 'Enabled', 'elm' ) ?></option>
+						<option value="0" selected="selected"><?php _e( 'Disabled', 'elm' ) ?></option>
+					</select>
+				</div>
+			</div>
+			<div class="shortcode-row form-group">
 				<label class="col-sm-4 control-label" for="cluster_size"><?php _e( 'Cluster grid size', 'elm' ) ?></label>
 				<div class="controls col-sm-8" data-tip="<?php _e( 'Grid size of the cluster', 'elm' ) ?>">
 					<select class="form-control" id="cluster_size">
