@@ -51,6 +51,11 @@
         };
         map = new google.maps.Map( document.getElementById( elm_google_maps.map_id ), map_options );
 
+        // Setting default map type if exists.
+        if ( typeof elm_google_maps.default_map_type != 'undefined' ) {
+          map.setMapTypeId( google.maps.MapTypeId[ elm_google_maps.default_map_type ] );
+        }
+
         infoBubble = generateInfoBubble();
 
         var properties = elm_google_maps.markers;
