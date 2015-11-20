@@ -223,7 +223,22 @@ class ELM_Admin_Settings_Menu extends ELM_Admin_Controller {
 								),
 							)
 						),
-					)
+					),
+					'single_page_map_default_type' => array(
+						'id'   => 'single_page_map_default_type',
+						'name' => __( 'Map default display type', 'elm' ),
+						'desc' => __( 'Default display type of the map', 'elm' ),
+						'type' => 'select',
+						'std'  => 'ROADMAP',
+						'options' => apply_filters( 'single_page_map_default_type_options',
+							array(
+								'ROADMAP'   => __( 'ROADMAP', 'elm' ),
+								'SATELLITE' => __( 'SATELLITE', 'elm' ),
+								'HYBRID'    => __( 'HYBRID', 'elm' ),
+								'TERRAIN'   => __( 'TERRAIN', 'elm' ),
+							)
+						),
+					),
 				)
 			),
 			'markers' => apply_filters( 'elm_settings_markers',
