@@ -112,10 +112,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php
 					$map_type_options = apply_filters( 'elm_google_map_default_map_type_options',
 						array(
-							'ROADMAP'   => __( 'ROADMAP', 'elm' ),
-							'SATELLITE' => __( 'SATELLITE', 'elm' ),
-							'HYBRID'    => __( 'HYBRID', 'elm' ),
-							'TERRAIN'   => __( 'TERRAIN', 'elm' ),
+							'ROADMAP'   => __( 'Roadmap', 'elm' ),
+							'SATELLITE' => __( 'Sattelite', 'elm' ),
+							'HYBRID'    => __( 'Hybrid', 'elm' ),
+							'TERRAIN'   => __( 'Terrain', 'elm' ),
 						)
 					);
 					if ( count( $map_type_options ) ) {
