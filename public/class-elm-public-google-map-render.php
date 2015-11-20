@@ -33,6 +33,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 		'zoom_events'       => 0,
 		'cluster_size'      => -1,
 		'map_types'         => array( 'ROADMAP' ),
+		'default_map_type'  => 'ROADMAP',
 		'auto_zoom'         => 1,
 		'clustering'        => true,
 	);
@@ -125,6 +126,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 			'content'           => trim( $this->data['content'] ),
 			'map_id'            => $this->data['map_id'],
 			'map_types'         => $this->data['map_types'],
+			'default_map_type'  => trim( $this->data['default_map_type'] ),
 			'zoom'              => (int) $this->data['zoom'],
 			'zoom_events'       => absint( $this->data['zoom_events'] ),
 			'height'            => $this->data['map_style_height'],
@@ -179,6 +181,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 			'auto_zoom'         => $this->data['auto_zoom'],
 			'map_id'            => $this->data['map_id'],
 			'map_types'         => $this->data['map_types'],
+			'default_map_type'  => $this->data['default_map_type'],
 			'zoom'              => (int) $this->data['zoom'],
 			'zoom_events'       => absint( $this->data['zoom_events'] ),
 			'cluster_size'      => (int) $this->data['cluster_size'],
