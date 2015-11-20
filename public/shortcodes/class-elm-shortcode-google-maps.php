@@ -64,6 +64,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 				'map_style_height'  => '500',
 				'cluster_size'		=> -1,
 				'map_types'			=> array( 'ROADMAP' ),
+				'default_map_type'  => 'ROADMAP',
 				'auto_zoom'			=> 1,
 			), $atts
 		);
@@ -153,6 +154,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 				'zoom_events'       => absint( $this->attributes['zoom_events'] ),
 				'cluster_size'      => (int) $this->attributes['cluster_size'],
 				'map_types'         => $this->attributes['map_types'],
+				'default_map_type'  => trim( $this->attributes['default_map_type'] ),
 				'auto_zoom'         => absint( $this->attributes['auto_zoom'] ),
 				'clustering'        => true,
 			)
@@ -182,6 +184,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 				'zoom_events'       => absint( $this->attributes['zoom_events'] ),
 				'cluster_size'      => (int) $this->attributes['cluster_size'],
 				'map_types'         => $this->attributes['map_types'],
+				'default_map_type'  => trim( $this->attributes['default_map_type'] ),
 				'auto_zoom'         => absint( $this->attributes['auto_zoom'] ),
 				'clustering'        => true,
 			)
