@@ -5,9 +5,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * @var int $map_height
- * @var string $map_id
+ * @var ELM_Public_Single_Map $controller
+ * @var int                   $map_height
+ * @var string                $map_id
  */
+
+// Registering scripts and styles.
+$controller->register_scripts();
 ?>
 <div class="map_container" style="height: <?php echo absint( $map_height ) ? absint( $map_height ) : '500' ?>px;">
 	<div class="elm google-maps" id="<?php echo esc_attr( $map_id ) ?>" style="height: <?php echo absint( $map_height ) ? absint( $map_height ) : '500' ?>px; padding: 0px; margin: 0px;"></div>
