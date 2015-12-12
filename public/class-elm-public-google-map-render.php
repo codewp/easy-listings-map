@@ -36,6 +36,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 		'default_map_type'  => 'ROADMAP',
 		'auto_zoom'         => 1,
 		'clustering'        => true,
+		'map_styles'        => '',
 	);
 
 	/**
@@ -139,6 +140,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 			'auto_zoom'         => $this->data['auto_zoom'],
 			'markers'           => $this->markers,
 			'query_vars'        => $this->data['listings'] instanceof WP_Query ? $this->data['listings']->query_vars : '',
+			'map_styles'		=> trim( $this->data['map_styles'] ),
 		);
 		/*
 		 * if $output_map_div == 0 don't output map div. In other words developer wants
@@ -186,6 +188,7 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 			'zoom_events'       => absint( $this->data['zoom_events'] ),
 			'cluster_size'      => (int) $this->data['cluster_size'],
 			'info_window_close' => $images_url . 'map/info-window-close-button.png',
+			'map_styles'        => trim( $this->data['map_styles'] ),
 			'cluster_style'     => array(
 				(object) array(
 					'url'       => $images_url . 'map/m1.png',
