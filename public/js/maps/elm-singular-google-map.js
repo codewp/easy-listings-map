@@ -39,6 +39,9 @@ jQuery( function( $ ) {
               position: google.maps.ControlPosition.RIGHT_TOP
             }
         };
+        if ( elm_singular_map.map_styles.length ) {
+            map_options.styles = jQuery.parseJSON( elm_singular_map.map_styles );
+        }
         map = new google.maps.Map( document.getElementById( elm_singular_map.map_id ), map_options);
         // Setting default map type if exists.
         if ( typeof elm_singular_map.default_map_type != 'undefined' ) {
