@@ -48,24 +48,24 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 		$this->attributes = shortcode_atts(
 			array(
 				'post_type'         => $property_types,
-				'status'			=> array( 'current', 'sold', 'leased' ),
+				'status'            => array( 'current', 'sold', 'leased' ),
 				'page_properties'   => false, // Show only properties of current page in the map
 				'clustering'        => true, // Showing clusters in map.
-				'limit'				=> -1,	 // Show all of posts.
+				'limit'             => -1,	 // Show all of posts.
 				'orderby'           => 'date',
 				'order'             => 'DESC',
-				'location'			=> '',	// Location slug. Should be a name like sorrento
+				'location'          => '',	// Location slug. Should be a name like sorrento
 				'default_latitude'  => '39.911607',
 				'default_longitude' => '-100.853613',
 				'zoom'              => 1,
-				'zoom_events'		=> 0,	 // Should map load markers when zoom changes
+				'zoom_events'       => 0,	 // Should map load markers when zoom changes
 				'map_id'            => '',
 				'output_map_div'    => true, // if == false, map will output to a div that already specified, so map_id should be sent to shortcode.
 				'map_style_height'  => '500',
-				'cluster_size'		=> -1,
-				'map_types'			=> array( 'ROADMAP' ),
+				'cluster_size'      => -1,
+				'map_types'         => array( 'ROADMAP' ),
 				'default_map_type'  => 'ROADMAP',
-				'auto_zoom'			=> 1,
+				'auto_zoom'         => 1,
 			), $atts
 		);
 
@@ -141,6 +141,10 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 			);
 		}
 
+		// Getting settings.
+		$elm_settings = ELM_IOC::make( 'settings' )->get_settings();
+		$map_styles   = isset( $elm_settings['map_styles'] ) ? trim( $elm_settings['map_styles'] ) : '';
+
 		$elm_google_maps_render = new ELM_Public_Google_Map_Render(
 			array(
 				'listings'          => new WP_Query( $args ),
@@ -157,6 +161,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 				'default_map_type'  => trim( $this->attributes['default_map_type'] ),
 				'auto_zoom'         => absint( $this->attributes['auto_zoom'] ),
 				'clustering'        => true,
+				'map_styles'        => $map_styles,
 			)
 		);
 		ob_start();
@@ -171,6 +176,10 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 	 * @return void
 	 */
 	public function current_page_properties_map() {
+		// Getting settings.
+		$elm_settings = ELM_IOC::make( 'settings' )->get_settings();
+		$map_styles   = isset( $elm_settings['map_styles'] ) ? trim( $elm_settings['map_styles'] ) : '';
+
 		$elm_google_maps_render = new ELM_Public_Google_Map_Render(
 			array(
 				'listings'          => $GLOBALS['wp_query'],
@@ -187,6 +196,7 @@ class ELM_Shortcode_Google_Maps extends ELM_Public_Controller {
 				'default_map_type'  => trim( $this->attributes['default_map_type'] ),
 				'auto_zoom'         => absint( $this->attributes['auto_zoom'] ),
 				'clustering'        => true,
+				'map_styles'        => $map_styles,
 			)
 		);
 		ob_start();
