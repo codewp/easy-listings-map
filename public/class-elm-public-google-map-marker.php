@@ -50,18 +50,17 @@ class ELM_Public_Google_Map_Marker extends ELM_Public_Controller {
 		$property_coordinates = $this->elm_properties->get_property_coordinates( $listing_id );
 		if ( count( $property_coordinates ) ) {
 			// Getting extra info about property, like it's image and etc.
-			$image_url = '<img src="' . $this->get_images_url() .
-				'map/default-infowindow-image.png" style="width: 300px; height: 200px;" class="elm-infobubble-image" alt="' . trim( get_the_title() ) . '" />';
 			if ( has_post_thumbnail() ) {
-				$image_url = get_the_post_thumbnail( get_the_ID(), 'epl-image-medium-crop', array( 'class' => 'elm-infobubble-image' ) );
+				$image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'epl-image-medium-crop' );
 			}
-
+			$image_url = $image_url ? $image_url[0] : $this->get_images_url() . 'map/default-infowindow-image.png';
 			/**
 			 * Setting property marker icon.
 			 * Using marker that set in settings or use default marker for it.
 			 */
 			$property_status = get_post_meta( get_the_ID(), 'property_status', true );
 			$marker_icon     = $this->elm_properties->get_property_marker( get_post_type(), $property_status );
+			$title           = get_the_title();
 
 			$markers[] = array(
 				'listing_id'      => get_the_ID(),
@@ -69,8 +68,8 @@ class ELM_Public_Google_Map_Marker extends ELM_Public_Controller {
 				'longitude'       => $property_coordinates['longitude'],
 				'image_url'       => $image_url,
 				'url'             => esc_url( get_permalink() ),
-				'title'           => wp_trim_words( get_the_title(), 6 ),
-				'tab_title'       => wp_trim_words( get_the_title(), 2 ),
+				'title'           => substr( $title, 0, 25 ) . ( strlen( $title ) > 25 ? '...' : '' ),
+				'tab_title'       => substr( $title, 0, 10 ) . ( strlen( $title ) > 10 ? '...' : '' ),
 				'icons'           => $this->elm_properties->get_property_icons(),
 				// 'price'        => epl_get_property_price(),
 				'marker_icon'     => esc_url( $marker_icon ),
