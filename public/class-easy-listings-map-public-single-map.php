@@ -52,6 +52,7 @@ class ELM_Public_Single_Map extends ELM_Public_Controller {
 				$this->data['map_id']           = 'elm-singular-map';
 				$this->data['map_types']        = ! empty( $elm_settings['single_page_map_types'] ) ? array_values( $elm_settings['single_page_map_types'] ) : array( 'ROADMAP' );
 				$this->data['default_map_type'] = ! empty( $elm_settings['single_page_map_default_type'] ) ? $elm_settings['single_page_map_default_type'] : 'ROADMAP';
+				$this->data['map_styles']       = isset( $elm_settings['single_page_map_styles'] ) ? trim( $elm_settings['single_page_map_styles'] ) : '';
 				// Adding action for showing map.
 				$this->plugin_public->get_loader()->add_action( 'epl_property_map', $this, 'display_single_listing_map' );
 			}
