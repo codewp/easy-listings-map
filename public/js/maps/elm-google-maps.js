@@ -49,6 +49,9 @@
               position: google.maps.ControlPosition.RIGHT_TOP
             }
         };
+        if ( elm_google_maps.map_styles.length ) {
+          map_options.styles = jQuery.parseJSON( elm_google_maps.map_styles );
+        }
         map = new google.maps.Map( document.getElementById( elm_google_maps.map_id ), map_options );
 
         // Setting default map type if exists.
