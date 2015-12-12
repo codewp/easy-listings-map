@@ -212,4 +212,28 @@ class ELM_Admin_Element {
 		}
 	}
 
+	/**
+	 * Textarea Callback
+	 *
+	 * Renders textarea fields.
+	 *
+	 * @since  1.2.0
+	 * @param  array $args Arguments passed by the setting
+	 * @return void
+	 */
+	public function textarea( array $args ) {
+		$elm_settings = ELM_IOC::make( 'settings' )->get_settings();
+
+		if ( isset( $elm_settings[ $args['id'] ] ) ) {
+			$value = $elm_settings[ $args['id'] ];
+		} else {
+			$value = isset( $args['std'] ) ? $args['std'] : '';
+		}
+
+		$html = '<textarea class="large-text" cols="50" rows="5" id="elm_settings[' . $args['id'] . ']" name="elm_settings[' . $args['id'] . ']">' . esc_textarea( stripslashes( $value ) ) . '</textarea>';
+		$html .= '<label for="elm_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
+
+		echo $html;
+	}
+
 }
