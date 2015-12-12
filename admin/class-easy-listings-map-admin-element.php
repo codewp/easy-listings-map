@@ -236,4 +236,17 @@ class ELM_Admin_Element {
 		echo $html;
 	}
 
+	/**
+	 * Header Callback
+	 *
+	 * Renders the header.
+	 *
+	 * @since  1.2.0
+	 * @param  array $args Arguments passed by the setting
+	 * @return void
+	 */
+	public function header( $args ) {
+		echo '<hr/>';
+	}
+
 }
