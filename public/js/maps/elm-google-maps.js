@@ -130,38 +130,38 @@
             if ( typeof infoBubblePosition === 'undefined' ||
                 ( typeof infoBubblePosition !== 'undefined' && marker.position.lat() !== infoBubblePosition.lat() &&
                     marker.position.lng() !== infoBubblePosition.lng() ) ) {
-                infoBubble.close();
-                // Creating a new infoBubble in order to not over writing on previous infoBubble content.
-                infoBubble = generateInfoBubble();
-                var content = '';
-                infoBubble.setCloseButtonStyle( 'margin-right', '8px' );
-                if ( property.info.length > 1 ) {
-                    // Generating content for each property( properties that are in same coordinates ) in info window.
-                    for ( i = 0, max = property.info.length; i < max; i++ ) {
-                        content = '<div class="property-infobubble-content">' +
-                            '<a href="' + decodeURIComponent( property.info[i].url ) + '">' + property.info[i].image_url + '</a>' +
-                            '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[i].url ) + '">' + property.info[i].title + '</a></div>' +
-                            '<div class="property-type-status">' + property.info[i].property_type + ' - ' + property.info[i].property_status + '</div>' +
-                            // '<div class="property-meta pricing">' +  property.info[i].price + '</div>' +
-                            '<div class="property-feature-icons epl-clearfix">' + property.info[i].icons + '</div>' +
-                            '</div>';
-                        infoBubble.addTab( property.info[i].tab_title, content );
-                    }
-                    infoBubble.setCloseButtonStyle( 'margin-top', '12px' );
-                } else {
-                    content = '<div class="property-infobubble-content">' +
-                        '<a href="' + decodeURIComponent( property.info[0].url ) + '">' + property.info[0].image_url + '</a>' +
-                        '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[0].url ) + '">' + property.info[0].title + '</a></div>' +
-                        '<div class="property-type-status">' + property.info[0].property_type + ' - ' + property.info[0].property_status + '</div>' +
-                        // '<div class="property-meta pricing">' +  property.info[0].price + '</div>' +
-                        '<div class="property-feature-icons epl-clearfix">' + property.info[0].icons + '</div>' +
-                        '</div>';
-                    infoBubble.setContent( content );
-                    infoBubble.setCloseButtonStyle( 'margin-top', '8px' );
+              infoBubble.close();
+              // Creating a new infoBubble in order to not over writing on previous infoBubble content.
+              infoBubble = generateInfoBubble();
+              var content = '';
+              infoBubble.setCloseButtonStyle( 'margin-right', '6px' );
+              if ( property.info.length > 1 ) {
+                // Generating content for each property( properties that are in same coordinates ) in info window.
+                for ( i = 0, max = property.info.length; i < max; i++ ) {
+                  content = '<div class="property-infobubble-content">' +
+                    '<a href="' + decodeURIComponent( property.info[i].url ) + '"><img src="' + property.info[0].image_url + '" width="300" height="150" class="elm-infobubble-image wp-post-image" /></a>' +
+                    '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[i].url ) + '">' + property.info[i].title + '</a></div>' +
+                    '<div class="property-type-status">' + property.info[i].property_type + ' - ' + property.info[i].property_status + '</div>' +
+                    // '<div class="property-meta pricing">' +  property.info[i].price + '</div>' +
+                    '<div class="property-feature-icons epl-clearfix">' + property.info[i].icons + '</div>' +
+                    '</div>';
+                  infoBubble.addTab( property.info[i].tab_title, content );
                 }
+                infoBubble.setCloseButtonStyle( 'margin-top', '5px' );
+              } else {
+                content = '<div class="property-infobubble-content">' +
+                  '<a href="' + decodeURIComponent( property.info[0].url ) + '"><img src="' + property.info[0].image_url + '" width="300" height="150" class="elm-infobubble-image wp-post-image" /></a>' +
+                  '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[0].url ) + '">' + property.info[0].title + '</a></div>' +
+                  '<div class="property-type-status">' + property.info[0].property_type + ' - ' + property.info[0].property_status + '</div>' +
+                  // '<div class="property-meta pricing">' +  property.info[0].price + '</div>' +
+                  '<div class="property-feature-icons epl-clearfix">' + property.info[0].icons + '</div>' +
+                  '</div>';
+                infoBubble.setContent( content );
+                infoBubble.setCloseButtonStyle( 'margin-top', '8px' );
+              }
             }
             if ( ! infoBubble.isOpen() ) {
-                infoBubble.open( map, marker );
+              infoBubble.open( map, marker );
             }
         }
     }
@@ -364,8 +364,8 @@
      */
     window.generateInfoBubble = function generateInfoBubble() {
         return new InfoBubble({
-                    maxWidth: 300,
-                    maxHeight: 300,
+                    minWidth: 320,
+                    minHeight: 280,
                     closeSrc: elm_google_maps.info_window_close
                 });
     }
