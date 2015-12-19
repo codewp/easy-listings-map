@@ -50,10 +50,11 @@ class ELM_Public_Google_Map_Marker extends ELM_Public_Controller {
 		$property_coordinates = $this->elm_properties->get_property_coordinates( $listing_id );
 		if ( count( $property_coordinates ) ) {
 			// Getting extra info about property, like it's image and etc.
+			$image_url = '';
 			if ( has_post_thumbnail() ) {
 				$image_url = wp_get_attachment_image_src( get_post_thumbnail_id(), 'epl-image-medium-crop' );
 			}
-			$image_url = $image_url ? $image_url[0] : $this->get_images_url() . 'map/default-infowindow-image.png';
+			$image_url = ! empty( $image_url ) ? $image_url[0] : $this->get_images_url() . 'map/default-infowindow-image.png';
 			/**
 			 * Setting property marker icon.
 			 * Using marker that set in settings or use default marker for it.
