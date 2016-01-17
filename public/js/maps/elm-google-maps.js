@@ -137,11 +137,11 @@
               // Creating a new infoBubble in order to not over writing on previous infoBubble content.
               infoBubble = generateInfoBubble();
               var content = '';
-              infoBubble.setCloseButtonStyle( 'margin-right', '6px' );
               if ( property.info.length > 1 ) {
                 // Generating content for each property( properties that are in same coordinates ) in info window.
                 for ( i = 0, max = property.info.length; i < max; i++ ) {
                   content = '<div class="property-infobubble-content">' +
+                    '<img width="16" height="16" style="position: absolute; right: 0; margin-right: 8px; cursor: pointer; width: 16px; height: 16px;" onclick="infoBubble.close();" src="' + elm_google_maps.info_window_close + '">' +
                     '<a href="' + decodeURIComponent( property.info[i].url ) + '"><img src="' + property.info[0].image_url + '" width="300" height="150" class="elm-infobubble-image wp-post-image" /></a>' +
                     '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[i].url ) + '">' + property.info[i].title + '</a></div>' +
                     '<div class="property-type-status">' + property.info[i].property_type + ' - ' + property.info[i].property_status + '</div>' +
@@ -150,9 +150,9 @@
                     '</div>';
                   infoBubble.addTab( property.info[i].tab_title, content );
                 }
-                infoBubble.setCloseButtonStyle( 'margin-top', '5px' );
               } else {
                 content = '<div class="property-infobubble-content">' +
+                  '<img width="16" height="16" style="position: absolute; right: 0; margin-right: 8px; cursor: pointer; width: 16px; height: 16px;" onclick="infoBubble.close();" src="' + elm_google_maps.info_window_close + '">' +
                   '<a href="' + decodeURIComponent( property.info[0].url ) + '"><img src="' + property.info[0].image_url + '" width="300" height="150" class="elm-infobubble-image wp-post-image" /></a>' +
                   '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[0].url ) + '">' + property.info[0].title + '</a></div>' +
                   '<div class="property-type-status">' + property.info[0].property_type + ' - ' + property.info[0].property_status + '</div>' +
@@ -160,7 +160,6 @@
                   '<div class="property-feature-icons epl-clearfix">' + property.info[0].icons + '</div>' +
                   '</div>';
                 infoBubble.setContent( content );
-                infoBubble.setCloseButtonStyle( 'margin-top', '8px' );
               }
             }
             if ( ! infoBubble.isOpen() ) {
@@ -369,7 +368,7 @@
         return new InfoBubble({
                     minWidth: 320,
                     minHeight: 280,
-                    closeSrc: elm_google_maps.info_window_close
+                    hideCloseButton: true
                 });
     }
 
