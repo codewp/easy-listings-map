@@ -63,19 +63,22 @@ class ELM_Public_Google_Map_Marker extends ELM_Public_Controller {
 			$marker_icon     = $this->elm_properties->get_property_marker( get_post_type(), $property_status );
 			$title           = get_the_title();
 
-			$markers[] = array(
-				'listing_id'      => get_the_ID(),
-				'latitude'        => $property_coordinates['latitude'],
-				'longitude'       => $property_coordinates['longitude'],
-				'image_url'       => $image_url,
-				'url'             => esc_url( get_permalink() ),
-				'title'           => substr( $title, 0, 25 ) . ( strlen( $title ) > 25 ? '...' : '' ),
-				'tab_title'       => substr( $title, 0, 10 ) . ( strlen( $title ) > 10 ? '...' : '' ),
-				'icons'           => $this->elm_properties->get_property_icons(),
-				// 'price'        => epl_get_property_price(),
-				'marker_icon'     => esc_url( $marker_icon ),
-				'property_status' => $property_status,
-				'property_type'   => get_post_type(),
+			$markers[] = apply_filters( 'elm_marker_info',
+				array(
+					'listing_id'      => get_the_ID(),
+					'latitude'        => $property_coordinates['latitude'],
+					'longitude'       => $property_coordinates['longitude'],
+					'image_url'       => $image_url,
+					'url'             => esc_url( get_permalink() ),
+					'title'           => substr( $title, 0, 25 ) . ( strlen( $title ) > 25 ? '...' : '' ),
+					'tab_title'       => substr( $title, 0, 10 ) . ( strlen( $title ) > 10 ? '...' : '' ),
+					'icons'           => $this->elm_properties->get_property_icons(),
+					// 'price'        => epl_get_property_price(),
+					'marker_icon'     => esc_url( $marker_icon ),
+					'property_status' => $property_status,
+					'property_type'   => get_post_type(),
+				),
+				$listing_id
 			);
 		}
 	}
