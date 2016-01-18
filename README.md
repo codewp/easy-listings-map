@@ -58,6 +58,17 @@ Yes it is possible, please refer to [customizing markers](http://codewp.github.i
 
 == Changelog ==
 
+= 1.2.0 =
+
+* New : Making plugin template files overridable so developers can change functionality of map by overriding template files.
+* New : Adding default map display type to plugin settings.
+* New : Adding zoom_events to Google Maps shortcode of the plugin for loading listings when map zoom changes.
+* New : Changing Google Maps infowindow listings default image.
+* New : Adding map styles setting to changing map style based on entered style.
+* Fix : Close button positioning issue.
+* Fix : An issue in saving setting tab fields.
+* Fix : An issue in loading bound markers.
+
 = 1.1.3 =
 
 * New : Showing specific location listings in the map by choosing desired location from Google Maps shortcode.
