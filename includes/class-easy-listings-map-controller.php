@@ -163,9 +163,9 @@ abstract class ELM_Controller {
 	 *
 	 * @param string $_template_file Path to template file.
 	 * @param bool   $require_once   Whether to require_once or require. Default true.
-	 * @param array  $variables      Array of variables that should be used in template file.
+	 * @param array  $view_args      Array of arguments that maybe used in template file.
 	 */
-	public function load_template( $_template_file, $require_once = true, array $variables = array() ) {
+	public function load_template( $_template_file, $require_once = true, array $view_args = array() ) {
 		global $posts, $post, $wp_did_header, $wp_query, $wp_rewrite, $wpdb, $wp_version, $wp, $id, $comment, $user_ID;
 
 		if ( is_array( $wp_query->query_vars ) ) {
@@ -174,10 +174,6 @@ abstract class ELM_Controller {
 
 		if ( isset( $s ) ) {
 			$s = esc_attr( $s );
-		}
-
-		if ( is_array( $variables ) && count( $variables ) ) {
-			extract( $variables, EXTR_SKIP );
 		}
 
 		if ( $require_once ) {
