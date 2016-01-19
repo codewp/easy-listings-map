@@ -5,20 +5,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * @var ELM_Public_Google_Map_Render $controller
- * @var string 						 $content
- * @var string 						 $map_id
- * @var int    						 $height
- * @var array  						 $map_types
- * @var int    						 $zoom
- * @var string 						 $js_url
- * @var string 						 $css_url
- * @var string 						 $images_url
- * @var int    						 $cluster_size
- * @var string 						 $default_latitude
- * @var string 						 $default_longitude
- * @var int    						 $auto_zoom
+ * @var  array $view_args[
+ *       @type ELM_Public_Google_Map_Render controller
+ *       @type string 						content
+ *       @type string 						map_id
+ *       @type int    						height
+ *       @type array  						map_types
+ *       @type int    						zoom
+ *       @type string 						js_url
+ *       @type string 						css_url
+ *       @type string 						images_url
+ *       @type int    						cluster_size
+ *       @type string 						default_latitude
+ *       @type string 						default_longitude
+ *       @type int    						auto_zoom
+ * ]
  */
 
 // Registering scripts and styles for Google Maps.
-$controller->register_scripts();
+$view_args['controller']->register_scripts();
