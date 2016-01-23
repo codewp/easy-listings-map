@@ -5,13 +5,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * @var ELS_Walker_Location_Checkbox $location_walker
+ * @var  array $view_args[
+ *       @type array                        property_types
+ *       @type array                        property_status
+ *       @type ELS_Walker_Location_Checkbox location_walker
+ *       @type string                       includes_url
+ *       @type string                       css_url
+ *       @type string                       js_url
+ *       @type string                       suffix
+ * ]
  */
 ?>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="<?php echo esc_url( $css_url ) . 'bootstrap' . $suffix . '.css' ?>">
-<link rel="stylesheet" type="text/css" href="<?php echo esc_url( $css_url ) . 'elm-admin' . $suffix . '.css' ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo esc_url( $view_args['css_url'] ) . 'bootstrap' . $view_args['suffix'] . '.css' ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo esc_url( $view_args['css_url'] ) . 'elm-admin' . $view_args['suffix'] . '.css' ?>">
 </head>
 <body>
 	<div class="elm-shortcode" id="elm-shortcode-container">
@@ -38,8 +46,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="controls col-sm-8" data-tip="<?php _e( 'Listing types that shown in the map', 'elm' ) ?>">
 					<select class="form-control" multiple name="property_types" id="property_types">
 						<?php
-						if ( count( $property_types ) ) {
-							foreach ( $property_types as $property_type => $property_type_name ) {
+						if ( count( $view_args['property_types'] ) ) {
+							foreach ( $view_args['property_types'] as $property_type => $property_type_name ) {
 								echo '<option value="' . esc_attr( $property_type ) . '" selected>' . __( $property_type_name, 'elm' ) . '</option>';
 							}
 						}
@@ -52,8 +60,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="controls col-sm-8" data-tip="<?php _e( 'Status of listings', 'elm' ) ?>">
 					<select class="form-control" multiple name="property_status" id="property_status">
 						<?php
-						if ( count( $property_status ) ) {
-							foreach ( $property_status as $status => $status_name ) {
+						if ( count( $view_args['property_status'] ) ) {
+							foreach ( $view_args['property_status'] as $status => $status_name ) {
 								$selected = in_array( $status, array( 'current', 'sold', 'leased' ) ) ? true : false;
 								echo '<option value="' . esc_attr( $status ) . '"' . selected( $selected, true ) . '>' . __( $status_name, 'elm' ) . '</option>';
 							}
@@ -66,7 +74,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<label class="col-sm-4 control-label" for="location"><?php _e( 'Specific location listings', 'elm' ) ?></label>
 				<div class="controls col-sm-8" data-tip="<?php _e( 'Show listings of only specific location', 'elm' ) ?>">
 					<ul id="location" name="location" data-wp-lists="list:location" class="form-control">
-						<?php wp_terms_checklist( null, array( 'taxonomy' => 'location', 'walker' => $location_walker ) ); ?>
+						<?php wp_terms_checklist( null, array( 'taxonomy' => 'location', 'walker' => $view_args['location_walker'] ) ); ?>
 					</ul>
 				</div>
 			</div>
@@ -104,6 +112,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<input type="checkbox" class="map_types" name="map_types[3]" id="map_types[3]" value="TERRAIN">
 						<?php _e( 'Terrain', 'elm' ) ?>
 					</label>
+				</div>
+			</div>
+			<div class="shortcode-row form-group">
+				<label class="col-sm-4 control-label"><?php _e( 'Map default display type', 'elm' ) ?></label>
+				<div class="controls col-sm-8" data-tip="<?php _e( 'Default display type of the map', 'elm' ) ?>">
+					<?php
+					$map_type_options = apply_filters( 'elm_google_map_default_map_type_options',
+						array(
+							'ROADMAP'   => __( 'Roadmap', 'elm' ),
+							'SATELLITE' => __( 'Sattelite', 'elm' ),
+							'HYBRID'    => __( 'Hybrid', 'elm' ),
+							'TERRAIN'   => __( 'Terrain', 'elm' ),
+						)
+					);
+					if ( count( $map_type_options ) ) {
+						echo '<select class="form-control" name="default_map_type" id="default_map_type">';
+						foreach ( $map_type_options as $value => $name ) {
+							echo '<option value="' . esc_attr( $value ) . '">' . $name . '</option>';
+						}
+						echo '</select>';
+					}
+					?>
 				</div>
 			</div>
 			<div class="shortcode-row form-group">
@@ -148,6 +178,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 			<div class="shortcode-row form-group">
+				<label class="col-sm-4 control-label" for="zoom_events"><?php _e( 'Zoom change events', 'elm' ) ?></label>
+				<div class="controls col-sm-8" data-tip="<?php _e( 'If enabled when map zoom changes it will loads only markers that are in bound of the map. It recomended to leave it to disable when you set Number of listings in the map to -1, or when possible.', 'elm' ) ?>">
+					<select class="form-control" id="zoom_events" name="zoom_events">
+						<option value="1"><?php _e( 'Enabled', 'elm' ) ?></option>
+						<option value="0" selected="selected"><?php _e( 'Disabled', 'elm' ) ?></option>
+					</select>
+				</div>
+			</div>
+			<div class="shortcode-row form-group">
 				<label class="col-sm-4 control-label" for="cluster_size"><?php _e( 'Cluster grid size', 'elm' ) ?></label>
 				<div class="controls col-sm-8" data-tip="<?php _e( 'Grid size of the cluster', 'elm' ) ?>">
 					<select class="form-control" id="cluster_size">
@@ -179,9 +218,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="<?php echo esc_url( $includes_url ) ?>/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="<?php echo esc_url( $includes_url ) ?>/js/tinymce/tiny_mce_popup.js"></script>
-	<script type="text/javascript" src="<?php echo esc_url( $js_url ) . 'jquery-tiptip/jquery.tipTip' . $suffix . '.js'  ?>"></script>
-	<script type="text/javascript" src="<?php echo esc_url( $js_url ) . 'editor/elm-google-maps-shortcode-content' . $suffix . '.js' ?>"></script>
+	<script type="text/javascript" src="<?php echo esc_url( $view_args['includes_url'] ) ?>/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="<?php echo esc_url( $view_args['includes_url'] ) ?>/js/tinymce/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="<?php echo esc_url( $view_args['js_url'] ) . 'jquery-tiptip/jquery.tipTip' . $view_args['suffix'] . '.js'  ?>"></script>
+	<script type="text/javascript" src="<?php echo esc_url( $view_args['js_url'] ) . 'editor/elm-google-maps-shortcode-content' . $view_args['suffix'] . '.js' ?>"></script>
 </body>
 </html>

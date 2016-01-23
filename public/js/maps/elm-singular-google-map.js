@@ -32,16 +32,31 @@ jQuery( function( $ ) {
             },
             zoomControl: true,
             zoomControlOptions: {
-              style: google.maps.ZoomControlStyle.DEFAULT
+              style: google.maps.ZoomControlStyle.DEFAULT,
+              position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            streetViewControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_TOP
             }
         };
+        if ( elm_singular_map.map_styles.length ) {
+            map_options.styles = jQuery.parseJSON( elm_singular_map.map_styles );
+        }
         map = new google.maps.Map( document.getElementById( elm_singular_map.map_id ), map_options);
+        // Setting default map type if exists.
+        if ( typeof elm_singular_map.default_map_type != 'undefined' ) {
+          map.setMapTypeId( google.maps.MapTypeId[ elm_singular_map.default_map_type ] );
+        }
         if ( elm_singular_map.latitude && elm_singular_map.longitude ) {
             var marker = new google.maps.Marker({
                 position: latlng,
                 map: map
             });
         }
+
+        google.maps.event.addListener( map, 'tilesloaded', function() {
+          jQuery('#gmap-loading').remove();
+        });
     }
 
     if ( 'object' === typeof google && 'object' === typeof google.maps ) {

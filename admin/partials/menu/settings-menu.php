@@ -5,12 +5,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$active_tab = isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $tabs ) ? $_GET['tab'] : 'general';
+/**
+ * @var array $view_args[
+ *      @type array tabs
+ * ]
+ */
+
+$active_tab = isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $view_args['tabs'] ) ? $_GET['tab'] : 'general';
 ?>
 <div class="wrap">
 	<h2 class="nav-tab-wrapper">
 		<?php
-		foreach ( $tabs as $tab_id => $tab_name ) {
+		foreach ( $view_args['tabs'] as $tab_id => $tab_name ) {
 			$tab_url = esc_url_raw( add_query_arg( array(
 				'settings-updated' => false,
 				'tab'              => $tab_id,

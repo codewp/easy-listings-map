@@ -148,6 +148,18 @@ class ELM_Admin_Settings_Menu extends ELM_Admin_Controller {
 			/** General Settings */
 			'general' => apply_filters( 'elm_settings_general',
 				array(
+					'map_styles' => array(
+						'id'   => 'map_styles',
+						'name' => __( 'Map styles', 'elm' ),
+						'desc' => __( sprintf( 'Get map styles from %s and paste it here', '<a href="https://snazzymaps.com/" target="_blank"><strong>snazzymaps</strong></a>' ), 'elm' ),
+						'type' => 'textarea',
+					),
+					'single_page_map_settings' => array(
+						'id' => 'single_page_map_settings',
+						'name' => '<strong>' . __( 'Single listing page map settings', 'elm' ) . '</strong>',
+						'desc' => __( 'Configure single listing page map options', 'elm' ),
+						'type' => 'header'
+					),
 					'map_in_single_page'     => array(
 						'id'      => 'map_in_single_page',
 						'name'    => __( 'Display map in single listing page', 'elm' ),
@@ -223,7 +235,28 @@ class ELM_Admin_Settings_Menu extends ELM_Admin_Controller {
 								),
 							)
 						),
-					)
+					),
+					'single_page_map_default_type' => array(
+						'id'   => 'single_page_map_default_type',
+						'name' => __( 'Map default display type', 'elm' ),
+						'desc' => __( 'Default display type of the map', 'elm' ),
+						'type' => 'select',
+						'std'  => 'ROADMAP',
+						'options' => apply_filters( 'single_page_map_default_type_options',
+							array(
+								'ROADMAP'   => __( 'Roadmap', 'elm' ),
+								'SATELLITE' => __( 'Sattelite', 'elm' ),
+								'HYBRID'    => __( 'Hybrid', 'elm' ),
+								'TERRAIN'   => __( 'Terrain', 'elm' ),
+							)
+						),
+					),
+					'single_page_map_styles' => array(
+						'id'   => 'single_page_map_styles',
+						'name' => __( 'Map styles', 'elm' ),
+						'desc' => __( sprintf( 'Get map styles from %s and paste it here', '<a href="https://snazzymaps.com/" target="_blank"><strong>snazzymaps</strong></a>' ), 'elm' ),
+						'type' => 'textarea',
+					),
 				)
 			),
 			'markers' => apply_filters( 'elm_settings_markers',
@@ -264,6 +297,8 @@ class ELM_Admin_Settings_Menu extends ELM_Admin_Controller {
 		if ( empty( $_POST['_wp_http_referer'] ) ) {
 			return $input;
 		}
+
+		parse_str( $_POST['_wp_http_referer'], $referrer );
 
 		$settings = $this->get_registered_settings();
 		$tab      = isset( $referrer['tab'] ) ? $referrer['tab'] : 'general';

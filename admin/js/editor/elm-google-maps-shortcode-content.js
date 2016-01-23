@@ -67,10 +67,14 @@
 			output += ' status=' + property_status;
 			output += location.length ? ' location="' + location + '"' : '';
 			output += ' map_types=' + map_types;
+			if ( jQuery( '#default_map_type' ).val().length ) {
+				output += ' default_map_type="' + jQuery( '#default_map_type' ).val() + '"';
+			}
 			output += ' limit="' + ( jQuery( '#limit' ).val() > -1 ? jQuery( '#limit' ).val() : '-1' ) + '"';
 			output += jQuery( '#map_height' ).val() > 0 ? ' map_style_height="' + jQuery( '#map_height' ).val() + '"' : '';
 			output += ' auto_zoom="' + jQuery( '#auto_zoom' ).val() + '"';
 			output += ( jQuery( '#map_zoom' ).val() >= 0 && jQuery( '#auto_zoom' ).val() === '0' ) ? ' zoom="' + jQuery( '#map_zoom' ).val() + '"' : '';
+			output += ' zoom_events="' + jQuery( '#zoom_events' ).val() + '"';
 			output += jQuery( '#cluster_size' ).val() ? ' cluster_size="' + jQuery( '#cluster_size' ).val() + '"' : '';
 			output += ' order="'+ jQuery( '#order' ).val() + '"';
 			output += ' default_latitude="' + jQuery( '#default_latitude' ).val() + '"';

@@ -81,15 +81,27 @@ class Easy_Listings_Map_Public {
 		/**
 		 * The controller class of public area.
 		 */
-		require_once $this->get_path() . 'class-easy-listings-map-public-controller.php';
+		require_once plugin_dir_path( __FILE__ ) . 'class-easy-listings-map-public-controller.php';
+		/**
+		 * The controller class responsible for marker functionalities.
+		 */
+		require_once plugin_dir_path( __FILE__ ) . 'class-elm-public-google-map-marker.php';
+		/**
+		 * The controller class for rendering Google Maps by listings send to it.
+		 */
+		require_once plugin_dir_path( __FILE__ ) . 'class-elm-public-google-map-render.php';
 		/**
 		 * The class responsible for displaying map in single listings page.
 		 */
-		require_once $this->get_path() . 'class-easy-listings-map-public-single-map.php';
+		require_once plugin_dir_path( __FILE__ ) . 'class-easy-listings-map-public-single-map.php';
 		/**
 		 * The class responsible for creating maps shortcode.
 		 */
-		require_once $this->get_path() . 'shortcodes/class-elm-shortcode-google-maps.php';
+		require_once plugin_dir_path( __FILE__ ) . 'shortcodes/class-elm-shortcode-google-maps.php';
+		/**
+		 * The class responsible for ajax functionalities of Google Maps.
+		 */
+		require_once plugin_dir_path( __FILE__ ) . 'class-elm-public-google-map-ajax.php';
 	}
 
 	/**
@@ -101,12 +113,14 @@ class Easy_Listings_Map_Public {
 	public function define_hooks() {
 		$this->loader->add_action( 'wp_enqueue_scripts', $this, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $this, 'enqueue_scripts' );
-
-		// Registering google maps listings shortcode.
-		$this->loader->add_shortcode( 'elm_google_maps', new ELM_Shortcode_Google_Maps( $this, ELM_IOC::make( 'properties' ) ), 'output' );
-
 		// Hook for single listing map.
 		new ELM_Public_Single_Map( $this );
+		// Hooks for ajax functionality of Google Maps.
+		$google_map_ajax = new ELM_Public_Google_Map_Ajax( $this->loader );
+		$google_map_ajax->define_hooks();
+		// Shortcodes.
+		// Registering google maps listings shortcode.
+		$this->loader->add_shortcode( 'elm_google_maps', new ELM_Shortcode_Google_Maps(), 'output' );
 	}
 
 	/**

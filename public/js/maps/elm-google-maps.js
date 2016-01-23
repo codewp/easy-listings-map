@@ -1,5 +1,5 @@
-jQuery( function( $ ) {
-    var map = infoBubble = markerClusterer = null;
+(function( $, window ) {
+    var map = infoBubble = markerClusterer = animatedMarker = null;
     var get_markers = true;    // Flag for checking should map get markers on bound changes or not
     var markers = [];          // Array of markers in the map.
 
@@ -7,7 +7,7 @@ jQuery( function( $ ) {
      * Initialize Google Maps for listings
      * @return void
      */
-    function initializeListingMap() {
+    window.initializeListingMap = function initializeListingMap() {
         // If map initialized already don't init again.
         if ( map ) {
             return;
@@ -42,10 +42,22 @@ jQuery( function( $ ) {
             },
             zoomControl: true,
             zoomControlOptions: {
-              style: google.maps.ZoomControlStyle.DEFAULT
+              style: google.maps.ZoomControlStyle.DEFAULT,
+              position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            streetViewControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_TOP
             }
         };
+        if ( elm_google_maps.map_styles.length ) {
+          map_options.styles = jQuery.parseJSON( elm_google_maps.map_styles );
+        }
         map = new google.maps.Map( document.getElementById( elm_google_maps.map_id ), map_options );
+
+        // Setting default map type if exists.
+        if ( typeof elm_google_maps.default_map_type != 'undefined' ) {
+          map.setMapTypeId( google.maps.MapTypeId[ elm_google_maps.default_map_type ] );
+        }
 
         infoBubble = generateInfoBubble();
 
@@ -61,25 +73,7 @@ jQuery( function( $ ) {
          * Auto zoom and fitBounds to showing all of markers as good as possible.
          */
         if ( '1' === elm_google_maps.auto_zoom && markers.length ) {
-            var bounds = new google.maps.LatLngBounds();
-            for ( i = 0, max = markers.length; i < max; i++ ) {
-                bounds.extend( markers[i].getPosition() );
-            }
-            //center the map to the geometric center of all markers
-            map.setCenter( bounds.getCenter() );
-            map.fitBounds( bounds );
-
-            // Don't get markers when auto zoom changes zoom level.
-            get_markers = false;
-            //remove one zoom level to ensure no marker is on the edge.
-            map.setZoom( map.getZoom() - 1 >= 0 ? map.getZoom() - 1 : map.getZoom() );
-            // set a minimum zoom
-            // if you got only 1 marker or all markers are on the same address map will be zoomed too much.
-            if ( map.getZoom() > 15 ) {
-                // Don't get markers when auto zoom changes zoom level.
-                get_markers = false;
-                map.setZoom( 15 );
-            }
+            mapAutoZoom();
         }
         // Auto zoom disabled.
         else if ( markers.length ) {
@@ -88,10 +82,14 @@ jQuery( function( $ ) {
         }
 
         // Load bound markers if all of listings doesn't loads already.
-        if ( '-1' !== elm_google_maps.limit ) {
+        if ( typeof elm_google_maps.zoom_events != 'undefined' && 0 != elm_google_maps.zoom_events ) {
             google.maps.event.addListener( map, 'dragend', getBoundMarkers );
             google.maps.event.addListener( map, 'zoom_changed', getBoundMarkers );
         }
+
+        google.maps.event.addListener( map, 'tilesloaded', function() {
+          jQuery('#gmap-loading').remove();
+        });
     }
 
     if ( 'object' === typeof google && 'object' === typeof google.maps ) {
@@ -128,45 +126,44 @@ jQuery( function( $ ) {
      * @param  {} property object of properties that are in the same coordinates.
      * @return void
      */
-    function getInfoWindow( marker, property ) {
+    window.getInfoWindow = function getInfoWindow( marker, property ) {
         return function() {
             var infoBubblePosition = infoBubble.get( 'position' );
             // Generate content of infobubble if it isn't defined already or previous infoBubble marker is not same as current marker.
             if ( typeof infoBubblePosition === 'undefined' ||
                 ( typeof infoBubblePosition !== 'undefined' && marker.position.lat() !== infoBubblePosition.lat() &&
                     marker.position.lng() !== infoBubblePosition.lng() ) ) {
-                infoBubble.close();
-                // Creating a new infoBubble in order to not over writing on previous infoBubble content.
-                infoBubble = generateInfoBubble();
-                var content = '';
-                infoBubble.setCloseButtonStyle( 'margin-right', '8px' );
-                if ( property.info.length > 1 ) {
-                    // Generating content for each property( properties that are in same coordinates ) in info window.
-                    for ( i = 0, max = property.info.length; i < max; i++ ) {
-                        content = '<div class="property-infobubble-content">' +
-                            '<a href="' + decodeURIComponent( property.info[i].url ) + '">' + property.info[i].image_url + '</a>' +
-                            '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[i].url ) + '">' + property.info[i].title + '</a></div>' +
-                            '<div class="property-type-status">' + property.info[i].property_type + ' - ' + property.info[i].property_status + '</div>' +
-                            // '<div class="property-meta pricing">' +  property.info[i].price + '</div>' +
-                            '<div class="property-feature-icons epl-clearfix">' + property.info[i].icons + '</div>' +
-                            '</div>';
-                        infoBubble.addTab( property.info[i].tab_title, content );
-                    }
-                    infoBubble.setCloseButtonStyle( 'margin-top', '12px' );
-                } else {
-                    content = '<div class="property-infobubble-content">' +
-                        '<a href="' + decodeURIComponent( property.info[0].url ) + '">' + property.info[0].image_url + '</a>' +
-                        '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[0].url ) + '">' + property.info[0].title + '</a></div>' +
-                        '<div class="property-type-status">' + property.info[0].property_type + ' - ' + property.info[0].property_status + '</div>' +
-                        // '<div class="property-meta pricing">' +  property.info[0].price + '</div>' +
-                        '<div class="property-feature-icons epl-clearfix">' + property.info[0].icons + '</div>' +
-                        '</div>';
-                    infoBubble.setContent( content );
-                    infoBubble.setCloseButtonStyle( 'margin-top', '8px' );
+              infoBubble.close();
+              // Creating a new infoBubble in order to not over writing on previous infoBubble content.
+              infoBubble = generateInfoBubble();
+              var content = '';
+              if ( property.info.length > 1 ) {
+                // Generating content for each property( properties that are in same coordinates ) in info window.
+                for ( i = 0, max = property.info.length; i < max; i++ ) {
+                  content = '<div class="property-infobubble-content">' +
+                    '<img width="16" height="16" style="position: absolute; right: 0; margin-right: 8px; cursor: pointer; width: 16px; height: 16px;" onclick="infoBubble.close();" src="' + elm_google_maps.info_window_close + '">' +
+                    '<a href="' + decodeURIComponent( property.info[i].url ) + '"><img src="' + property.info[0].image_url + '" width="300" height="150" class="elm-infobubble-image wp-post-image" /></a>' +
+                    '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[i].url ) + '">' + property.info[i].title + '</a></div>' +
+                    '<div class="property-type-status">' + property.info[i].property_type + ' - ' + property.info[i].property_status + '</div>' +
+                    // '<div class="property-meta pricing">' +  property.info[i].price + '</div>' +
+                    '<div class="property-feature-icons epl-clearfix">' + property.info[i].icons + '</div>' +
+                    '</div>';
+                  infoBubble.addTab( property.info[i].tab_title, content );
                 }
+              } else {
+                content = '<div class="property-infobubble-content">' +
+                  '<img width="16" height="16" style="position: absolute; right: 0; margin-right: 8px; cursor: pointer; width: 16px; height: 16px;" onclick="infoBubble.close();" src="' + elm_google_maps.info_window_close + '">' +
+                  '<a href="' + decodeURIComponent( property.info[0].url ) + '"><img src="' + property.info[0].image_url + '" width="300" height="150" class="elm-infobubble-image wp-post-image" /></a>' +
+                  '<div class="title"><a class="infobubble-property-title" href="' + decodeURIComponent( property.info[0].url ) + '">' + property.info[0].title + '</a></div>' +
+                  '<div class="property-type-status">' + property.info[0].property_type + ' - ' + property.info[0].property_status + '</div>' +
+                  // '<div class="property-meta pricing">' +  property.info[0].price + '</div>' +
+                  '<div class="property-feature-icons epl-clearfix">' + property.info[0].icons + '</div>' +
+                  '</div>';
+                infoBubble.setContent( content );
+              }
             }
             if ( ! infoBubble.isOpen() ) {
-                infoBubble.open( map, marker );
+              infoBubble.open( map, marker );
             }
         }
     }
@@ -174,10 +171,10 @@ jQuery( function( $ ) {
     /**
      * Getting markers from server when bounds of map changes.
      *
-     * @since 1.0.0
+     * @since  1.0.0
      * @return void
      */
-    function getBoundMarkers() {
+    window.getBoundMarkers = function getBoundMarkers() {
         /**
          * Checking should this function get bound markers or not.
          * Don't get markers when auto zoom changes zoom level.
@@ -202,29 +199,20 @@ jQuery( function( $ ) {
             type: 'POST',
             url : elmPublicAjaxUrl,
             data : {
-                'action'       : 'load_map_markers',
-                'nonce'        : elm_google_maps.nonce,
-                'southWestLat' : swLat,
-                'southWestLng' : swLng,
-                'northEastLat' : neLat,
-                'northEastLng' : neLng,
-                'post_type'    : elm_google_maps.post_type,
-                'status'       : elm_google_maps.status,
-                'order'        : elm_google_maps.order,
-                'cluster_size' : elm_google_maps.cluster_size
+              'action'       : 'load_map_markers',
+              'nonce'        : elm_google_maps.nonce,
+              'southWestLat' : swLat,
+              'southWestLng' : swLng,
+              'northEastLat' : neLat,
+              'northEastLng' : neLng,
+              'query_vars'   : elm_google_maps.query_vars,
+              'cluster_size' : elm_google_maps.cluster_size
             }
         })
         .done( function( response ) {
             response = jQuery.parseJSON( response );
             if ( 1 === response.success ) {
-                // Removing old markers.
-                removeMarkers();
-                if ( response.markers.length ) {
-                    // Creating markers.
-                    createMarkers( response.markers );
-                    // Adding map markers to clusters.
-                    addMarkersToCluster();
-                }
+                addListingsToMap( response.markers );
             } else if ( 0 === response.success ) {
                 console.log( response.message );
             }
@@ -234,10 +222,10 @@ jQuery( function( $ ) {
     /**
      * Removing markers from map.
      *
-     * @since 1.0.0
+     * @since  1.0.0
      * @return void
      */
-    function removeMarkers() {
+    window.removeMarkers = function removeMarkers() {
         if ( markerClusterer ) {
             markerClusterer.clearMarkers();
         }
@@ -248,17 +236,18 @@ jQuery( function( $ ) {
     /**
      * Creating markers for properties.
      *
-     * @since 1.0.0
+     * @since  1.0.0
      * @param  [] properties
      * @return void
      */
-    function createMarkers( properties ) {
+    window.createMarkers = function createMarkers( properties ) {
         if ( properties.length ) {
             var marker;
             for ( i = 0, max = properties.length; i < max; i++ ) {
                 marker = new google.maps.Marker({
                     position: new google.maps.LatLng( properties[i].latitude, properties[i].longitude ),
-                    icon: properties[i]['marker_icon']
+                    icon: properties[i]['marker_icon'],
+                    listing_id : properties[i]['listing_id']
                 });
                 markers.push( marker );
                 google.maps.event.addListener( marker, 'click', getInfoWindow( marker, properties[i] ) );
@@ -271,7 +260,7 @@ jQuery( function( $ ) {
      *
      * @since 1.0.0
      */
-    function addMarkersToCluster() {
+    window.addMarkersToCluster = function addMarkersToCluster() {
         if ( markers.length ) {
             var gridSize = elm_google_maps.cluster_size == -1 ? null : parseInt( elm_google_maps.cluster_size, 10 );
             markerClusterer = new MarkerClusterer(map, markers, {
@@ -288,16 +277,98 @@ jQuery( function( $ ) {
     }
 
     /**
+     * Adding listings to the map.
+     *
+     * @since 1.2.0
+     * @param void listings
+     */
+    window.addListingsToMap = function addListingsToMap( listings ) {
+        // Removing old markers.
+        removeMarkers();
+        if ( listings.length ) {
+            // Creating markers.
+            createMarkers( listings );
+            // Adding map markers to clusters.
+            addMarkersToCluster();
+        }
+    }
+
+    /**
+     * Animating a listing marker in the map.
+     *
+     * @since  1.2.0
+     * @param  int                      listingId
+     * @param  google.maps.Animation    animationType
+     * @return void|null
+     */
+    window.animateListingMarker = function animateListingMarker( listingId, animationType ) {
+        // Using default animation type.
+        if ( ! animationType ) {
+            animationType = google.maps.Animation.BOUNCE;
+        }
+        for ( var i = 0, max = markers.length; i < max; i++ ) {
+            for ( var j = 0, maxListings = markers[ i ]['listing_id'].length; j < maxListings; j++ ) {
+                if ( listingId == markers[ i ]['listing_id'][j] ) {
+                    animatedMarker = markers[ i ];
+                    markers[ i ].setAnimation( animationType );
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * Stoping an animated marker in the map if exists any animated marker in the map.
+     *
+     * @since  1.2.0
+     * @return void
+     */
+    window.stopAnimatedMarker = function stopAnimatedMarker() {
+        if ( animatedMarker ) {
+            animatedMarker.setAnimation( null );
+        }
+    }
+
+    /**
+     * Auto zoom feature of the map.
+     * Auto zoom to showing all of listings in the map if possible.
+     *
+     * @since  1.2.0
+     * @return void
+     */
+    window.mapAutoZoom = function() {
+        var bounds = new google.maps.LatLngBounds();
+        for ( i = 0, max = markers.length; i < max; i++ ) {
+            bounds.extend( markers[i].getPosition() );
+        }
+        //center the map to the geometric center of all markers
+        map.setCenter( bounds.getCenter() );
+        map.fitBounds( bounds );
+
+        // Don't get markers when auto zoom changes zoom level.
+        get_markers = false;
+        //remove one zoom level to ensure no marker is on the edge.
+        map.setZoom( map.getZoom() - 1 >= 0 ? map.getZoom() - 1 : map.getZoom() );
+        // set a minimum zoom
+        // if you got only 1 marker or all markers are on the same address map will be zoomed too much.
+        if ( map.getZoom() > 15 ) {
+            // Don't get markers when auto zoom changes zoom level.
+            get_markers = false;
+            map.setZoom( 15 );
+        }
+    }
+
+    /**
      * Generating an info bubble object type.
      *
      * @since 1.0.0
      * @return InfoBubble
      */
-    function generateInfoBubble() {
+    window.generateInfoBubble = function generateInfoBubble() {
         return new InfoBubble({
-                    maxWidth: 300,
-                    maxHeight: 300,
-                    closeSrc: elm_google_maps.info_window_close
+                    minWidth: 320,
+                    minHeight: 280,
+                    hideCloseButton: true
                 });
     }
 
@@ -312,4 +383,4 @@ jQuery( function( $ ) {
         this.close_.style[ key ] = value;
     };
 
-});
+})( jQuery, window );
