@@ -107,6 +107,10 @@ class Easy_Listings_Map_Admin {
 		 * The class responsible for show
 		 */
 		require_once $this->get_path() . 'class-easy-listings-map-admin-notices.php';
+		/**
+		 * Welcome pages controller of the plugin.
+		 */
+		require_once $this->get_path() . 'class-elm-admin-welcome.php';
 	}
 
 	/**
@@ -123,11 +127,15 @@ class Easy_Listings_Map_Admin {
 		$this->menu = new ELM_Admin_Menu( $this );
 		// Admin notices.
 		new ELM_Admin_Notices( $this->loader );
+		// Hooks for welcome pages of the plugin.
+		new ELM_Admin_Welcome( $this->loader, $this->version );
 
 		// Changing upload directory of the plugin.
 		$this->loader->add_filter( 'upload_dir', $this, 'upload_dir' );
 		// Rate us on wordpress.org.
 		$this->loader->add_filter( 'admin_footer_text', $this, 'rate_us' );
+		// Plugin links.
+		$this->loader->add_filter( 'plugin_row_meta', $this, 'plugin_row_meta_links', 10, 2 );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $this, 'enqueue_scripts' );
@@ -147,14 +155,20 @@ class Easy_Listings_Map_Admin {
 			return false;
 		}
 
+		$return = false;
 		$screen = get_current_screen();
 
 		$pages = apply_filters( 'elm_admin_pages', $this->menu->get_menus() );
 		if ( in_array( $screen->id, $pages ) ) {
-			return true;
+			$return = true;
 		}
 
-		return false;
+		// Welcome pages of the plugin.
+		if ( 'dashboard_page_elm-getting-started' === $screen->id ) {
+			$return = true;
+		}
+
+		return (bool) apply_filters( 'elm_is_admin_page', $return );
 	}
 
 	/**
@@ -208,6 +222,7 @@ class Easy_Listings_Map_Admin {
 		wp_localize_script( $this->plugin_name, 'elm_vars', array(
 			'use_this_file'    => __( 'Use This File', 'elm' ),
 			'add_new_download' => __( 'Add New Download', 'elm' ),
+			'subscribe_nonce'  => wp_create_nonce( 'elm_subscribe_email_send' ),
 		) );
 	}
 
@@ -260,6 +275,26 @@ class Easy_Listings_Map_Admin {
 		);
 
 		return str_replace( '</span>', '', $footer_text ) . ' | ' . $rate_text . '</span>';
+	}
+
+	/**
+	 * Plugin row meta links
+	 * This function adds additional links below the plugin in admin plugins page.
+	 *
+	 * @since  1.0.0
+	 * @param  array  $links 	The array having default links for the plugin.
+	 * @param  string $file 	The name of the plugin file.
+	 * @return array  $links 	Plugin default links and specific links.
+	 */
+	public function plugin_row_meta_links( $links, $file ) {
+		if ( false !== strpos( $file, 'easy_listings_map.php' ) ) {
+			$plugin_links = array(
+				'<a href="' . admin_url( 'index.php?page=elm-getting-started' ) . '">' . esc_html__( 'Getting Started', 'elm' ) . '</a>',
+			);
+			$links = array_merge( $links, $plugin_links );
+		}
+
+		return $links;
 	}
 
 	/**
