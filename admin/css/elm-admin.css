@@ -56,3 +56,27 @@
 .elm-shortcode .shortcode-row ul#location ul {
 	list-style-type: none;
 }
+ /* Subscribe styles */
+.subscribe-form input[type="text"].error-field, .subscribe-form input[type="email"].error-field {
+    border-color: red;
+    background-color: #F6D3D3;
+}
+.subscribe-form th {
+	width: 70px;
+}
+.subscribe-form .message {
+    background: #fff none repeat scroll 0 0;
+    border-left: 4px solid #fff;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    margin: 5px 15px 2px 0px;
+    padding: 11px 15px;
+}
+.subscribe-form .message-info {
+    border-color: #00a0d2;
+}
+.subscribe-form .message-error {
+    border-color: #dd3d36;
+}
+.subscribe-form .message-success {
+    border-color: #7ad03a;
+}
