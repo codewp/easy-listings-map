@@ -4,7 +4,7 @@ Donate link: http://codewp.github.io/easy-listings-map/
 Tags: easy property listings, epl, easy property listings extension, easy property listings extensions, easy property listings map, easy property listings google maps, epl extension, epl extensions, epl map, epl google maps, property listings, property management, real estate, real estate connected
 Requires at least: 3.3
 Tested up to: 4.4.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,10 +29,15 @@ Features of the plugin include:
 * Ability to show details of listing in the map ( image of the listing, ... ).
 * Ability to show details of the listings in the map that are in same position( tabbed Google Map info window ).
 * Ability to auto zoom in the map for showing more listings in the map.
+* Ability to show specific location listings.
+* Ability to choose Google Maps view types like Roadmap, Sattelite, Hybrid, Terrain.
+* Ability to choose a Google Maps view type as a default view type.
+* Supports Map Styles of [snazzymaps](https://snazzymaps.com/).
+* Supports template overriding feature so developers can customize it.
 * Compatible with all of Easy Property Listings versions.
 * A fast and efficient plugin written using WordPress standards.
 
-More information at [Easy Listings Map](http://codewp.github.io/easy-listings-map/?utm_source=readme&utm_medium=description_tab&utm_content=home_link&utm_campaign=elm_home).
+For more information refer to plugin getting started page after installing it, Getting Started page link will shown in plugins page under Easy Listings Map plugin description.
 
 == Installation ==
 
@@ -75,6 +80,11 @@ Yes it is possible, please refer to [customizing markers](http://codewp.github.i
 7. Single listing page Roadmap view map
 
 == Changelog ==
+
+= 1.2.1 =
+
+* New : Adding getting started page to plugin.
+* Fix : Changing name of location walker class.
 
 = 1.2.0 =
 
