@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @var  array $view_args[
  *       @type array                        property_types
  *       @type array                        property_status
- *       @type ELS_Walker_Location_Checkbox location_walker
+ *       @type ELM_Walker_Location_Checkbox location_walker
  *       @type string                       includes_url
  *       @type string                       css_url
  *       @type string                       js_url
