@@ -1,5 +1,4 @@
 <?php
-
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -13,11 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage Easy_Listings_Map/includes/walkers
  * @author     Taher Atashbar <taher.atashbar@gmail.com>
  */
-
-class ELS_Walker_Location_Checkbox extends Walker {
+class ELM_Walker_Location_Checkbox extends Walker {
 
 	public $tree_type = 'location';
-	public $db_fields = array( 'parent' => 'parent', 'id' => 'term_id', 'slug' => 'slug' );
+	public $db_fields = array(
+		'parent' => 'parent',
+		'id' => 'term_id',
+		'slug' => 'slug',
+	);
 
 	/**
 	 * @see Walker::start_lvl()
