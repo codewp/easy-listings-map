@@ -86,7 +86,7 @@ class ELM_Admin_Editor extends ELM_Admin_Controller {
 			array(
 				'property_types'  => epl_get_active_post_types(),	// all of active property post types.
 				'property_status' => $properties->get_all_status(), // all of property status.
-				'location_walker' => new ELS_Walker_Location_Checkbox(),
+				'location_walker' => new ELM_Walker_Location_Checkbox(),
 				'includes_url'    => includes_url(),
 				'css_url'		  => $this->admin->get_css_folder(),
 				'js_url'		  => $this->admin->get_js_folder(),
