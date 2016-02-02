@@ -21,10 +21,15 @@ Features of the plugin include:
 * Ability to show details of listing in the map ( image of the listing, ... ).
 * Ability to show details of the listings in the map that are in same position( tabbed Google Map info window ).
 * Ability to auto zoom in the map for showing more listings in the map.
+* Ability to show specific location listings.
+* Ability to choose Google Maps view types like Roadmap, Sattelite, Hybrid, Terrain.
+* Ability to choose a Google Maps view type as a default view type.
+* Supports Map Styles of [snazzymaps](https://snazzymaps.com/).
+* Supports template overriding feature so developers can customize it.
 * Compatible with all of Easy Property Listings versions.
 * A fast and efficient plugin written using WordPress standards.
 
-More information at [Easy Listings Map](http://codewp.github.io/easy-listings-map/?utm_source=readme&utm_medium=description_tab&utm_content=home_link&utm_campaign=elm_home).
+For more information refer to plugin getting started page after installing it, Getting Started page link will shown in plugins page under Easy Listings Map plugin description.
 
 == Installation ==
 
@@ -57,6 +62,11 @@ Because it is a best way to showing **listings** in the map from speed view. If 
 Yes it is possible, please refer to [customizing markers](http://codewp.github.io/easy-listings-map/doc/plugin-settings/#markers-tab-of-settings-menu-).
 
 == Changelog ==
+
+= 1.2.1 =
+
+* New : Adding getting started page to plugin.
+* Fix : Changing name of location walker class.
 
 = 1.2.0 =
 
