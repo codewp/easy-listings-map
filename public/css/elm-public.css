@@ -7,12 +7,16 @@
   max-height: none;
 }
 
+.map_container {
+  position: relative;
+}
+
 #gmap-loading {
   background-color: #fff;
   color: #434a54;
   margin: 0px auto;
   position: absolute;
-  top: 20%;
+  top: 40%;
   left: 50%;
   width: 300px;
   height: 105px;
