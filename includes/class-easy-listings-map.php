@@ -74,7 +74,7 @@ class Easy_Listings_Map {
 	public function __construct() {
 
 		$this->plugin_name = 'easy-listings-map';
-		$this->version     = '1.2.1';
+		$this->version     = '1.2.2';
 
 		$this->load_vendors();
 		$this->load_dependencies();
