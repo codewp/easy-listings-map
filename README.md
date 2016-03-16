@@ -63,6 +63,10 @@ Yes it is possible, please refer to [customizing markers](http://codewp.github.i
 
 == Changelog ==
 
+= 1.2.2 =
+
+* Fix : Set loading map message position in center of the map.
+
 = 1.2.1 =
 
 * New : Adding getting started page to plugin.
