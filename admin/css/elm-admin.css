@@ -80,3 +80,33 @@
 .subscribe-form .message-success {
     border-color: #7ad03a;
 }
+.subscribe-container {
+	background-color: #fff;
+	padding: 30px;
+	margin: 10px 10px 0px 10px;
+	border-left: 4px solid #27b14f;
+	-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+}
+.subscribe-container input[type="text"],
+.subscribe-container input[type="email"] {
+	font-size: 16px;
+	line-height: 1.5;
+	padding: 7px 10px;
+	display: block;
+	max-width: none;
+}
+#subscribe-info {
+	font-size: 18px;
+}
+#subscribe-info span {
+	text-decoration: underline;
+	color: #00a0d2;
+}
+/* Media Queries */
+@media only screen and ( min-width: 782px ) {
+	.subscribe-container input[type="text"],
+	.subscribe-container input[type="email"] {
+		width: 60%;
+	}
+}
