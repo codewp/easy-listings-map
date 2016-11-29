@@ -72,7 +72,7 @@ function run_easy_listings_map() {
 			require_once plugin_dir_path( __FILE__ ) . 'includes/class-easy-property-listings-extension-activation.php';
 		}
 		$activation = new EPL_Extension_Activation( plugin_basename( __FILE__ ) );
-		$activation = $activation->run();
+		$activation->run();
 	} else {
 		$plugin = new Easy_Listings_Map();
 		$plugin->run();
