@@ -113,6 +113,8 @@ class Easy_Listings_Map_Public {
 	public function define_hooks() {
 		$this->loader->add_action( 'wp_enqueue_scripts', $this, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $this, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_print_scripts', $this, 'dequeue_scripts', 100 );
+
 		// Hook for single listing map.
 		new ELM_Public_Single_Map( $this );
 		// Hooks for ajax functionality of Google Maps.
@@ -179,6 +181,16 @@ class Easy_Listings_Map_Public {
 		/*wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/elm-public' . $suffix . '.js',
 			array( 'jquery' ), $this->version, true );*/
 
+	}
+
+	/**
+	 * Dequeue scripts.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function dequeue_scripts() {
+		wp_dequeue_script( 'google-map-v-3' );
 	}
 
 	/**
