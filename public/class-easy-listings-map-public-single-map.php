@@ -83,15 +83,19 @@ class ELM_Public_Single_Map extends ELM_Public_Controller {
 	 * @since 1.0.0
 	 */
 	public function register_scripts() {
+		$api_key  = epl_get_option( 'epl_google_api_key' );
+		$api_key  = empty( $api_key ) ? 'AIzaSyCBpgWp8d61yCDUgJVcy1-MOUogxbSzVRI' : $api_key;
+
 		$protocol = is_ssl() ? 'https' : 'http';
 		// Use minified libraries if SCRIPT_DEBUG is turned off
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 		// Register the script first.
-		wp_enqueue_script( 'elm_singular_google_map', $this->plugin_public->get_js_folder() . 'maps/elm-singular-google-map' . $suffix . '.js',
-			array( 'jquery' ), $this->plugin_public->get_version(), true );
+		wp_register_script( 'elm-google-map-v-3', $protocol . '://maps.googleapis.com/maps/api/js?v=3.exp' . ( ! empty( $api_key ) ? '&key=' . esc_attr( $api_key ) : '' ) );
+		wp_enqueue_script( 'elm_singular_google_map', $this->get_js_url() . 'maps/elm-singular-google-map' . $suffix . '.js',
+			array( 'jquery', 'elm-google-map-v-3' ), $this->plugin_public->get_version(), true );
 		wp_localize_script( 'elm_singular_google_map', 'elm_singular_map', $this->data );
 
-		wp_enqueue_script( 'google-map-v-3', $protocol . '://maps.googleapis.com/maps/api/js?v=3.exp' );
+		wp_enqueue_style( 'elm-google-maps', $this->get_css_url() . 'elm-google-maps' . $suffix . '.css' );
 	}
 
 	/**

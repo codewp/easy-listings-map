@@ -160,6 +160,9 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 	 * @return void
 	 */
 	public function register_scripts() {
+		$api_key    = epl_get_option( 'epl_google_api_key' );
+		$api_key    = empty( $api_key ) ? 'AIzaSyCBpgWp8d61yCDUgJVcy1-MOUogxbSzVRI' : $api_key;
+
 		// Registering scripts.
 		$protocol   = is_ssl() ? 'https' : 'http';
 		// Use minified libraries if SCRIPT_DEBUG is turned off
@@ -167,13 +170,13 @@ class ELM_Public_Google_Map_Render extends ELM_Public_Controller {
 		$js_url     = $this->get_js_url();
 		$css_url    = $this->get_css_url();
 		$images_url = $this->get_images_url();
-		wp_enqueue_script( 'google-map-v-3', $protocol . '://maps.googleapis.com/maps/api/js?v=3.exp' );
-		wp_enqueue_script( 'google-maps-clusters', $js_url . 'maps/markerclusterer' . $suffix . '.js',
+		wp_register_script( 'elm-google-map-v-3', $protocol . '://maps.googleapis.com/maps/api/js?v=3.exp' . ( ! empty( $api_key ) ? '&key=' . esc_attr( $api_key ) : '' ) );
+		wp_register_script( 'google-maps-clusters', $js_url . 'maps/markerclusterer' . $suffix . '.js',
 			array(), false, true );
-		wp_enqueue_script( 'google-maps-infobubble', $js_url . 'maps/infobubble' . $suffix . '.js',
+		wp_register_script( 'google-maps-infobubble', $js_url . 'maps/infobubble' . $suffix . '.js',
 			array(), false, true );
 		wp_enqueue_script( 'elm_google_maps', $js_url . 'maps/elm-google-maps' . $suffix . '.js',
-			array( 'jquery', 'google-map-v-3', 'google-maps-clusters', 'google-maps-infobubble' ), false, true );
+			array( 'jquery', 'elm-google-map-v-3', 'google-maps-clusters', 'google-maps-infobubble' ), false, true );
 		$elm_google_maps = array(
 			'nonce'             => wp_create_nonce( 'elm_bound_markers' ),
 			'query_vars'        => $this->data['listings'] instanceof WP_Query ? $this->data['listings']->query_vars : '',
