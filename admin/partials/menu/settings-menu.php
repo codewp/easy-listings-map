@@ -11,9 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  * ]
  */
 
-$subscribed = get_option( '_elm_subscribe', false );
 $active_tab = isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $view_args['tabs'] ) ? $_GET['tab'] : 'general';
 ?>
+<div class="update-nag asn-advertise">
+	<div class="asn-adv-logo"></div>
+	<p class="asn-adv-title">Do you want easy to use and advanced plugins for Easy Property Listings?</p>
+	<p class="asn-adv-body">We are working on easy to use and advanced plugins for <strong>Easy Property Listings</strong> that you can find them <a href=""><strong>here</strong></a>.</p>
+</div>
 <div class="wrap">
 	<h2 class="nav-tab-wrapper">
 		<?php
@@ -30,33 +34,6 @@ $active_tab = isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $view_arg
 		}
 		?>
 	</h2>
-	<?php
-	if ( ! $subscribed ) {
-		?>
-		<div class="subscribe-container">
-			<p id="subscribe-info"><strong><?php _e( sprintf( 'Subscribe to our list to get %s of Easy Listings Map and news about it.', '<span>updated documentation</span>' ), 'elm' ); ?></strong></p>
-			<div class="subscribe-form">
-				<div id="subscribe-message" class="message" style="display: none;"></div>
-				<table class="form-table">
-					<tbody>
-						<tr>
-							<th scope="row"><strong><?php _e( 'Name', 'elm' ) ?></strong></th>
-							<td><input type="text" class="popup-input" name="name" placeholder="<?php _e( 'Name', 'elm' ) ?>" id="name"></td>
-						</tr>
-						<tr>
-							<th scope="row"><strong><?php _e( 'Email', 'elm' ) ?></strong></th>
-							<td><input type="email" class="popup-input" name="email" placeholder="<?php _e( 'Email', 'elm' ) ?>" id="email"></td>
-						</tr>
-					</tbody>
-				</table>
-				<p class="submit">
-					<button id="subscribe" class="button button-primary"><?php _e( 'Subscribe', 'elm' ) ?></button>
-				</p>
-			</div>
-		</div>
-		<?php
-	}
-	?>
 	<div id="tab-container">
 		<form method="post" action="options.php">
 			<?php
