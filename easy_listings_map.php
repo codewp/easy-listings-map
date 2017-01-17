@@ -8,17 +8,17 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://codewp.github.io/easy-listings-map
+ * @link              http://www.asanaplugins.com/
  * @since             1.0.0
  * @package           Easy_Listings_Map
  *
  * @wordpress-plugin
  * Plugin Name:       Easy Listings Map
- * Plugin URI:        http://codewp.github.io/easy-listings-map
+ * Plugin URI:        http://www.asanaplugins.com/
  * Description:       Easy to use and advanced map extension for Easy Property Listings plugin
- * Version:           1.2.2
+ * Version:           1.2.3
  * Author:            Taher Atashbar
- * Author URI:        http://codewp.github.io/easy-listings-map
+ * Author URI:        http://www.asanaplugins.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       elm
