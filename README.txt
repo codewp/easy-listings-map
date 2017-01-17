@@ -52,6 +52,7 @@ Features of the plugin include:
 * Ability to show map in full screen size.
 * Finding user location in the map over HTTPS.
 * Supports Google Maps direction service.
+* Finding direction from specific location to specific property location.
 * Animating markers on loading markers.
 
 **[Try Pro version demo](http://www.demos.asanaplugins.com/)**
