@@ -52,6 +52,12 @@ More features will come to pro version of the plugin if you support us by **[pur
 
 Refer to [documentation](https://asanaplugins.freshdesk.com/support/solutions/16000037719) of the plugin for more information.
 
+= Tags =
+
+easy property listings, epl, easy property listings extension, easy property listings extensions, easy property listings map, 
+easy property listings google maps, epl extension, epl extensions, epl map, epl google maps, property listings, property management, 
+property listings map, property management map, real estate, real estate connected, real estate map, easy listings map, easy google map
+
 == Installation ==
 
 1. Upload `easy-listings-map` to the `/wp-content/plugins/` directory.

@@ -1,7 +1,7 @@
 === Easy Listings Map ===
 Contributors: c0dezer0
 Donate link: http://codewp.github.io/easy-listings-map/
-Tags: easy property listings, epl, easy property listings extension, easy property listings extensions, easy property listings map, easy property listings google maps, epl extension, epl extensions, epl map, epl google maps, property listings, property management, real estate, real estate connected
+Tags: easy property listings, epl, easy property listings extension, easy property listings extensions, easy property listings map, easy property listings google maps, epl extension, epl extensions, epl map, epl google maps, property listings, property management, property listings map, property management map, real estate, real estate connected, real estate map, easy listings map, easy google map
 Requires at least: 3.3
 Tested up to: 4.4.2
 Stable tag: 1.2.2
@@ -59,6 +59,12 @@ Features of the plugin include:
 More features will come to pro version of the plugin if you support us by **[purchasing](http://www.asanaplugins.com/products/easy-listings-map-pro/)** it.
 
 Refer to [documentation](https://asanaplugins.freshdesk.com/support/solutions/16000037719) of the plugin for more information.
+
+= Tags =
+
+easy property listings, epl, easy property listings extension, easy property listings extensions, easy property listings map,
+easy property listings google maps, epl extension, epl extensions, epl map, epl google maps, property listings, property management,
+property listings map, property management map, real estate, real estate connected, real estate map, easy listings map, easy google map
 
 == Installation ==
 
