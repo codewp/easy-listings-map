@@ -107,10 +107,6 @@ class Easy_Listings_Map_Admin {
 		 * The class responsible for show
 		 */
 		require_once $this->get_path() . 'class-easy-listings-map-admin-notices.php';
-		/**
-		 * Welcome pages controller of the plugin.
-		 */
-		require_once $this->get_path() . 'class-elm-admin-welcome.php';
 	}
 
 	/**
@@ -127,8 +123,6 @@ class Easy_Listings_Map_Admin {
 		$this->menu = new ELM_Admin_Menu( $this );
 		// Admin notices.
 		new ELM_Admin_Notices( $this->loader );
-		// Hooks for welcome pages of the plugin.
-		new ELM_Admin_Welcome( $this->loader, $this->version );
 
 		// Changing upload directory of the plugin.
 		$this->loader->add_filter( 'upload_dir', $this, 'upload_dir' );
@@ -289,7 +283,7 @@ class Easy_Listings_Map_Admin {
 	public function plugin_row_meta_links( $links, $file ) {
 		if ( false !== strpos( $file, 'easy_listings_map.php' ) ) {
 			$plugin_links = array(
-				'<a href="' . admin_url( 'index.php?page=elm-getting-started' ) . '">' . esc_html__( 'Getting Started', 'elm' ) . '</a>',
+				'<a href="https://asanaplugins.freshdesk.com/support/solutions/16000037719" target="_blank">' . esc_html__( 'Getting Started', 'elm' ) . '</a>',
 			);
 			$links = array_merge( $links, $plugin_links );
 		}
