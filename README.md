@@ -2,6 +2,10 @@
 
 Easy to use and advanced map extension for Easy Property Listings wordpress plugin.
 
+**[Upgrade to Pro version to getting more useful features and supporting us](http://www.asanaplugins.com/products/easy-listings-map-pro/)**
+
+[Premium Support](https://asanaplugins.freshdesk.com/support/tickets/new)
+
 == Description ==
 
 Easy Listings Map is an easy to use, advanced and free map extension for Easy Property Listings which allows site owners to add Google Maps to their site that shows listings in the map.
@@ -25,11 +29,28 @@ Features of the plugin include:
 * Ability to choose Google Maps view types like Roadmap, Sattelite, Hybrid, Terrain.
 * Ability to choose a Google Maps view type as a default view type.
 * Supports Map Styles of [snazzymaps](https://snazzymaps.com/).
+* Supports Google Maps API key.
 * Supports template overriding feature so developers can customize it.
 * Compatible with all of Easy Property Listings versions.
 * A fast and efficient plugin written using WordPress standards.
 
-For more information refer to plugin getting started page after installing it, Getting Started page link will shown in plugins page under Easy Listings Map plugin description.
+**Pro Version Features**
+
+* A custom address meta-box in listings admin page that is easy to use for setting listing address by Google Maps auto complete address or moving marker on the map.
+* An address bar on the map to finding address.
+* Supports Google Maps auto complete address.
+* Ability to show [multiple maps](http://www.demos.asanaplugins.com/multiple-maps/) in same page.
+* Supports Google Maps Traffic, Transit and Bicycling layers.
+* Ability to show map in full screen size.
+* Finding user location in the map over HTTPS.
+* Supports Google Maps direction service.
+* Animating markers on loading markers.
+
+**[Try Pro version demo](http://www.demos.asanaplugins.com/)**
+
+More features will come to pro version of the plugin if you support us by **[purchasing](http://www.asanaplugins.com/products/easy-listings-map-pro/)** it.
+
+Refer to [documentation](https://asanaplugins.freshdesk.com/support/solutions/16000037719) of the plugin for more information.
 
 == Installation ==
 
@@ -62,6 +83,11 @@ Because it is a best way to showing **listings** in the map from speed view. If 
 Yes it is possible, please refer to [customizing markers](http://codewp.github.io/easy-listings-map/doc/plugin-settings/#markers-tab-of-settings-menu-).
 
 == Changelog ==
+
+= 1.2.3 =
+
+* New : Adding Google Maps API key support to the plugin.
+* Fix : Issue of not loading map because of Google Maps API key support.
 
 = 1.2.2 =
 
