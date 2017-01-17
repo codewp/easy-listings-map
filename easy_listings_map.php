@@ -17,7 +17,7 @@
  * Plugin URI:        http://www.asanaplugins.com/
  * Description:       Easy to use and advanced map extension for Easy Property Listings plugin
  * Version:           1.2.3
- * Author:            Taher Atashbar
+ * Author:            Asana Plugins
  * Author URI:        http://www.asanaplugins.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
