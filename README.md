@@ -2,10 +2,6 @@
 
 Easy to use and advanced map extension for Easy Property Listings wordpress plugin.
 
-**[Upgrade to Pro version to getting more useful features and supporting us](http://www.asanaplugins.com/products/easy-listings-map-pro/)**
-
-[Premium Support](https://asanaplugins.freshdesk.com/support/tickets/new)
-
 == Description ==
 
 Easy Listings Map is an easy to use, advanced and free map extension for Easy Property Listings which allows site owners to add Google Maps to their site that shows listings in the map.
@@ -13,6 +9,10 @@ Easy Listings Map is an easy to use, advanced and free map extension for Easy Pr
 This extension also allows ability to show Google Maps for listing in single listing page.
 
 Requires [Easy Property Listings](https://wordpress.org/plugins/easy-property-listings/)
+
+**[Upgrade to Pro version to getting more useful features and supporting us](http://www.asanaplugins.com/products/easy-listings-map-pro/)**
+
+[Premium Support](https://asanaplugins.freshdesk.com/support/tickets/new)
 
 Features of the plugin include:
 
