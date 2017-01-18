@@ -18,6 +18,7 @@ $active_tab = isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $view_arg
 	<p class="asn-adv-title">Do you want easy to use and advanced plugins for Easy Property Listings with less price and better support?</p>
 	<p class="asn-adv-body">We are working on easy to use and advanced plugins for <strong>Easy Property Listings</strong> that you can find them <a href="http://www.asanaplugins.com/"><strong>here</strong></a>.</p>
 	<p class="asn-adv-body"><strong>Please support us</strong> by purchasing our plugins and we <strong>promise</strong> to creating easy to use and advanced plugins for <strong>Easy Property Listings</strong> with less price.</p>
+	<p class="asn-adv-body">Do you want custom works on <strong>Easy Property Listings</strong> <a href="http://www.asanaplugins.com/contact/" target="_blank">Contact US</a>.</p>
 	<p class="asn-adv-body">Please note that without your supports we can't <strong>live</strong>.</p>
 </div>
 <div class="wrap">
