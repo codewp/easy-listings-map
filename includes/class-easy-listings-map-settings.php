@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The class responsible for plugin settigns.
  *
- * @link       http://codewp.github.io/easy-listings-map
+ * @link       http://www.asanaplugins.com/
  * @since      1.0.0
  *
  * @package    Easy_Listings_Map

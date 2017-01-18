@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       http://codewp.github.io/easy-listings-map
+ * @link       http://www.asanaplugins.com/
  * @since      1.0.0
  *
  * @package    Easy_Listings_Map

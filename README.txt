@@ -72,7 +72,7 @@ property listings map, property management map, real estate, real estate connect
 1. Upload `easy-listings-map` to the `/wp-content/plugins/` directory.
 2. Activate `easy-property-listings` in your wordpress site if it is not activated already.
 3. Activate `easy-listings-map` through the 'Plugins' menu in WordPress.
-4. For detailed setup instructions, vist the official [Documentation](http://codewp.github.io/easy-listings-map/doc/) page.
+4. For detailed setup instructions, vist the official [Documentation](https://asanaplugins.freshdesk.com/support/solutions/16000037719) page.
 
 == Frequently Asked Questions ==
 
@@ -86,16 +86,16 @@ Because it is a best way to showing **listings** in the map from speed view. If 
 
 = How can I show listings in the Google Maps? =
 
-**Easy Listings Map** has a shortcode for Google maps for showing listings in the map, so you can use this shortcode for showing listings in the map, also this shortcode has a user interface for adding it pages or posts. For detailed information refer to [Adding Listings Google Maps](http://codewp.github.io/easy-listings-map/doc/plugin-shortcodes/#how-to-create-a-map-for-showing-listings-).
+**Easy Listings Map** has a shortcode for Google maps for showing listings in the map, so you can use this shortcode for showing listings in the map, also this shortcode has a user interface for adding it pages or posts. For detailed information refer to [Adding Listings Google Maps](https://asanaplugins.freshdesk.com/support/solutions/articles/16000012539-how-to-create-a-map-for-showing-listings).
 
 = How can I customize dimension of Google Maps? =
 
-* For customizing dimension of single listing page map refer to [single listing page map dimension](http://codewp.github.io/easy-listings-map/doc/plugin-settings/#general-tab-items-description-).
-* For customizing dimension of Google Maps listings shortcode refer to [listings map dimension](http://codewp.github.io/easy-listings-map/doc/plugin-shortcodes/#shortcode-form-items-description-).
+* For customizing dimension of single listing page map refer to [single listing page map dimension](https://asanaplugins.freshdesk.com/support/solutions/articles/16000012547-general-tab-of-settings-menu).
+* For customizing dimension of Google Maps listings shortcode refer to [listings map dimension](https://asanaplugins.freshdesk.com/support/solutions/articles/16000012542-shortcode-form-items-description).
 
 = Is it possible to customize markers in the Google Maps shortcode? =
 
-Yes it is possible, please refer to [customizing markers](http://codewp.github.io/easy-listings-map/doc/plugin-settings/#markers-tab-of-settings-menu-).
+Yes it is possible, please refer to [customizing markers](https://asanaplugins.freshdesk.com/support/solutions/articles/16000012549-markers-tab-of-settings-menu).
 
 == Changelog ==
 

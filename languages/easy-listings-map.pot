@@ -350,7 +350,7 @@ msgstr ""
 #. Plugin URI of the plugin/theme
 #. #-#-#-#-#  easy-listings-map.pot (Easy Listings Map 1.1.1)  #-#-#-#-#
 #. Author URI of the plugin/theme
-msgid "http://codewp.github.io/easy-listings-map"
+msgid "http://www.asanaplugins.com/"
 msgstr ""
 
 #. Description of the plugin/theme

@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://codewp.github.io/easy-listings-map
+ * @link       http://www.asanaplugins.com/
  * @since      1.0.0
  *
  * @package    Easy_Listings_Map
@@ -264,7 +264,7 @@ class Easy_Listings_Map_Admin {
 		}
 
 		$rate_text = sprintf( __( 'Thank you for using <a href="%1$s" target="_blank">Easy Listings Map</a>! Please <a href="%2$s" target="_blank">rate us</a> on <a href="%2$s" target="_blank">WordPress.org</a>', 'elm' ),
-			'http://codewp.github.io/easy-listings-map/',
+			'http://www.asanaplugins.com/',
 			'https://wordpress.org/support/view/plugin-reviews/easy-listings-map?filter=5#postform'
 		);
 
