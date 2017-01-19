@@ -60,7 +60,7 @@ class Easy_Listings_Map_Admin {
 	 *
 	 * @since 1.0.0
 	 * @access private
-	 * @var Easy_Listings_Map_Menu	$menu
+	 * @var ELM_Admin_Menu	$menu
 	 */
 	private $menu;
 
@@ -182,6 +182,7 @@ class Easy_Listings_Map_Admin {
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 		wp_enqueue_style( $this->plugin_name, $this->get_css_folder() . 'elm-admin' . $suffix . '.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'elm_admin_notices', $this->get_css_folder() . 'elm-admin-notices' . $suffix . '.css', array(), $this->version, 'all' );
 		if ( ! function_exists( 'wp_enqueue_media' ) || version_compare( $wp_version, '3.5', '<' ) ) {
 			wp_enqueue_style( 'thickbox' );
 		}
