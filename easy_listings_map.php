@@ -16,7 +16,7 @@
  * Plugin Name:       Easy Listings Map
  * Plugin URI:        http://www.asanaplugins.com/
  * Description:       Easy to use and advanced map extension for Easy Property Listings plugin
- * Version:           1.2.3
+ * Version:           1.2.4
  * Author:            Asana Plugins
  * Author URI:        http://www.asanaplugins.com/
  * License:           GPL-2.0+

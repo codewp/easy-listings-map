@@ -91,6 +91,10 @@ Yes it is possible, please refer to [customizing markers](https://asanaplugins.f
 
 == Changelog ==
 
+= 1.2.4 =
+
+* New : Adding plugin documentation links to the plugin.
+
 = 1.2.3 =
 
 * New : Adding Google Maps API key support to the plugin.
@@ -142,4 +146,4 @@ Yes it is possible, please refer to [customizing markers](https://asanaplugins.f
 
 = 1.0.0 =
 
-* First offical release!
+* First official release!
