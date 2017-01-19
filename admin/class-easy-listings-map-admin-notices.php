@@ -50,6 +50,10 @@ class ELM_Admin_Notices extends ELM_Admin_Controller {
 		if ( 1 === absint( $ignore ) || ( ! empty( $asana_plugin ) && 'easy-listings-map' != $asana_plugin ) ) {
 			return;
 		}
+
+		if ( empty( $asana_plugin ) ) {
+			update_option( 'asana_active_free_plugin', 'easy-listings-map' );
+		}
 		?>
 		<div class="update-nag asn-advertise">
 			<div class="asn-adv-logo"></div>
