@@ -19,9 +19,9 @@ if ( 1 === absint( $ignore ) ) {
 	<div class="update-nag asn-advertise">
 		<div class="asn-adv-logo"></div>
 		<p class="asn-adv-title">Do you want easy to use and advanced plugins for Easy Property Listings with less price and better support?</p>
-		<p class="asn-adv-body">We are working on easy to use and advanced plugins for <strong>Easy Property Listings</strong> that you can find them <a href="http://www.asanaplugins.com/"><strong>here</strong></a>.</p>
+		<p class="asn-adv-body">We are working on easy to use and advanced plugins for <strong>Easy Property Listings</strong> that you can find them <a href="http://www.asanaplugins.com/?utm_source=asanaplugins_messages&utm_medium=link"><strong>here</strong></a>.</p>
 		<p class="asn-adv-body"><strong>Please support us</strong> by purchasing our plugins and we <strong>promise</strong> to creating easy to use and advanced plugins for <strong>Easy Property Listings</strong> with less price and better support.</p>
-		<p class="asn-adv-body">Do you want custom works on <strong>Easy Property Listings</strong> <a href="http://www.asanaplugins.com/contact/" target="_blank">Contact US</a>.</p>
+		<p class="asn-adv-body">Do you want custom works on <strong>Easy Property Listings</strong> <a href="http://www.asanaplugins.com/contact/?utm_source=asanaplugins_messages&utm_medium=link" target="_blank">Contact US</a>.</p>
 		<p class="asn-adv-body">Please note that without your supports we can't <strong>live</strong>.</p>
 		<ul class="asn-adv-body">
 			<li>
@@ -34,7 +34,7 @@ if ( 1 === absint( $ignore ) ) {
 			</li>
 			<li>
 				<span class="dashicons dashicons-admin-plugins"></span>
-				<a href="http://www.asanaplugins.com/products/" target="_blank">Plugins</a>
+				<a href="http://www.asanaplugins.com/products/?utm_source=asanaplugins_messages&utm_medium=link" target="_blank">Plugins</a>
 			</li>
 		</ul>
 	</div>
