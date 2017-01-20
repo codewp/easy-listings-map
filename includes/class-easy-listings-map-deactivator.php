@@ -35,7 +35,11 @@ class Easy_Listings_Map_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+		// Delete when this is Asana active free plugin.
+		$asana_plugin = get_option( 'asana_active_free_plugin', '' );
+		if ( 'easy-listings-map' === $asana_plugin ) {
+			delete_option( 'asana_active_free_plugin' );
+		}
 	}
 
 }

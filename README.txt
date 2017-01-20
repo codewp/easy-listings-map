@@ -4,7 +4,7 @@ Donate link: http://www.asanaplugins.com/
 Tags: easy property listings, epl, easy property listings extension, easy property listings extensions, easy property listings map, easy property listings google maps, epl extension, epl extensions, epl map, epl google maps, property listings, property management, property listings map, property management map, real estate, real estate connected, real estate map, easy listings map, easy google map
 Requires at least: 3.3
 Tested up to: 4.7.1
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ This extension also allows ability to show Google Maps for listing in single lis
 
 Requires [Easy Property Listings](https://wordpress.org/plugins/easy-property-listings/)
 
-**[Upgrade to Pro version to getting more useful features and supporting us](http://www.asanaplugins.com/products/easy-listings-map-pro/)**
+**[Upgrade to Pro version to getting more useful features and supporting us](http://www.asanaplugins.com/products/easy-listings-map-pro/?utm_source=wordpress_org&utm_campaign=easy_listings_map&utm_medium=link)**
 
 [Premium Support](https://asanaplugins.freshdesk.com/support/tickets/new)
 
@@ -47,7 +47,7 @@ Features of the plugin include:
 * A custom address meta-box in listings admin page that is easy to use for setting listing address by Google Maps auto complete address or moving marker on the map.
 * An address bar on the map to finding address.
 * Supports Google Maps auto complete address.
-* Ability to show [multiple maps](http://www.demos.asanaplugins.com/multiple-maps/) in same page.
+* Ability to show [multiple maps](http://www.demos.asanaplugins.com/multiple-maps/?utm_source=wordpress_org&utm_campaign=easy_listings_map&utm_medium=link) in same page.
 * Supports Google Maps Traffic, Transit and Bicycling layers.
 * Ability to show map in full screen size.
 * Finding user location in the map over HTTPS.
@@ -55,9 +55,9 @@ Features of the plugin include:
 * Finding direction from specific location to specific property location.
 * Animating markers on loading markers.
 
-**[Try Pro version demo](http://www.demos.asanaplugins.com/)**
+**[Try Pro version demo](http://www.demos.asanaplugins.com/?utm_source=wordpress_org&utm_campaign=easy_listings_map&utm_medium=link)**
 
-More features will come to pro version of the plugin if you support us by **[purchasing](http://www.asanaplugins.com/products/easy-listings-map-pro/)** it.
+More features will come to pro version of the plugin if you support us by **[purchasing](http://www.asanaplugins.com/products/easy-listings-map-pro/?utm_source=wordpress_org&utm_campaign=easy_listings_map&utm_medium=link)** it.
 
 Refer to [documentation](https://asanaplugins.freshdesk.com/support/solutions/16000037719) of the plugin for more information.
 
@@ -98,6 +98,10 @@ Because it is a best way to showing **listings** in the map from speed view. If 
 Yes it is possible, please refer to [customizing markers](https://asanaplugins.freshdesk.com/support/solutions/articles/16000012549-markers-tab-of-settings-menu).
 
 == Changelog ==
+
+= 1.2.4 =
+
+* New : Adding plugin documentation links to the plugin.
 
 = 1.2.3 =
 
@@ -150,4 +154,4 @@ Yes it is possible, please refer to [customizing markers](https://asanaplugins.f
 
 = 1.0.0 =
 
-* First offical release!
+* First official release!
